@@ -1,0 +1,69 @@
+# ===============
+# Header
+# ===============
+menu:
+  首页: /
+  算法星图: /algorithm/
+  CTF档案: /ctf/
+  归档: /archives/
+  关于: /about/
+rss: false
+banner: "images/banner.jpg"
+subtitle: '在星云、证明与漏洞之间航行'
+links:
+  github: https://github.com/Drifter2005
+
+# ===============
+# Content
+# ===============
+excerpt_link: 继续观测
+fancybox: true
+
+# ===============
+# Footer
+# ===============
+copyright:
+
+# ===============
+# Sidebar
+# ===============
+sidebar: right
+widgets:
+- category
+- tag
+- tagcloud
+- archive
+- recent_posts
+
+# ===============
+# Widget behavior
+# ===============
+archive_type: 'monthly'
+show_count: false
+recent_posts_limits: 6
+
+# ===============
+# Miscellaneous
+# ===============
+google_analytics:
+gauges_analytics:
+favicon: /favicon.svg
+twitter:
+fb_admins:
+fb_app_id:
+
+# ===============
+# Comment system
+# ===============
+disqus_shortname:
+valine:
+  enable: false
+  appId:
+  appKey:
+  notify: false
+  verify: false
+  pageSize: 10
+  avatar: mm
+  lang: zh-cn
+  placeholder: 在这里留下你的观测信号
+  guest_info: nick,mail,link

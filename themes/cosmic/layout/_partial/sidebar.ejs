@@ -1,0 +1,10 @@
+<aside id="sidebar"<% if (theme.sidebar === 'bottom'){ %> class="outer"<% } %>>
+  <div class="sidebar-command">
+    <span class="sidebar-command-kicker">SIDE CONSOLE</span>
+    <strong>快速导航</strong>
+    <p>按分类、标签和时间线检索算法与 CTF 观测记录。</p>
+  </div>
+  <% theme.widgets.forEach(function(widget){ %>
+    <%- partial('_widget/' + widget) %>
+  <% }) %>
+</aside>

@@ -1,0 +1,45 @@
+<section class="portal-landing">
+  <div class="portal-panel">
+    <p class="portal-eyebrow">DRIFTER OBSERVATORY / ENTRY SEQUENCE</p>
+    <h1>进入深空算法观测站</h1>
+    <p class="portal-copy">这里记录算法证明、CTF 复盘、密码学边界与二进制探索。每一篇文章都尽量保留推导、证据、失败样例和可复现路径。</p>
+    <div class="portal-actions">
+      <a class="portal-action primary" href="<%- url_for('/algorithm/') %>">启动算法星图</a>
+      <a class="portal-action" href="<%- url_for('/ctf/') %>">打开 CTF 档案</a>
+      <a class="portal-action" href="<%- url_for('/archives/') %>">浏览观测记录</a>
+    </div>
+  </div>
+  <div class="portal-radar" aria-hidden="true">
+    <span class="radar-ring ring-one"></span>
+    <span class="radar-ring ring-two"></span>
+    <span class="radar-ring ring-three"></span>
+    <span class="radar-sweep"></span>
+    <span class="radar-core"></span>
+  </div>
+</section>
+
+<section class="mission-grid">
+  <a class="mission-card" href="<%- url_for('/algorithm/') %>">
+    <span class="mission-index">01</span>
+    <h2>算法星图</h2>
+    <p>图论、动态规划、数论与数据结构，用复杂度和不变量校准每条轨道。</p>
+  </a>
+  <a class="mission-card" href="<%- url_for('/ctf/') %>">
+    <span class="mission-index">02</span>
+    <h2>CTF 档案</h2>
+    <p>Web、Crypto、Reverse、Pwn 与 Misc，记录漏洞成因、利用链和修复思路。</p>
+  </a>
+  <a class="mission-card" href="<%- url_for('/about/') %>">
+    <span class="mission-index">03</span>
+    <h2>关于观测站</h2>
+    <p>把零散训练沉淀成可复用的知识结构，让每一次探索都留下坐标。</p>
+  </a>
+</section>
+
+<section class="latest-transmissions">
+  <div class="section-heading">
+    <span>Latest Transmissions</span>
+    <h2>最新观测记录</h2>
+  </div>
+  <%- partial('_partial/archive', {expand: true, index: true}) %>
+</section>

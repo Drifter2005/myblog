@@ -1,0 +1,898 @@
+// Cosmic observatory skin for Drifter Observatory.
+html
+  scroll-behavior: smooth
+
+body
+  color: #c9d7ea
+  background:
+    radial-gradient(circle at 18% 12%, rgba(75, 124, 255, 0.25), transparent 28%),
+    radial-gradient(circle at 84% 18%, rgba(116, 247, 209, 0.16), transparent 24%),
+    radial-gradient(circle at 58% 72%, rgba(255, 188, 117, 0.12), transparent 30%),
+    linear-gradient(135deg, #030611 0%, #071426 42%, #02040b 100%)
+  font-family: "Palatino Linotype", "Book Antiqua", "Source Han Serif SC", "Noto Serif SC", serif
+  overflow-x: hidden
+  &:before
+    content: ""
+    position: fixed
+    inset: 0
+    pointer-events: none
+    z-index: 0
+    background-image:
+      radial-gradient(circle, rgba(255,255,255,0.72) 0 1px, transparent 1.5px),
+      radial-gradient(circle, rgba(116,247,209,0.45) 0 1px, transparent 1.4px)
+    background-size: 120px 120px, 210px 210px
+    background-position: 0 0, 44px 72px
+    opacity: 0.42
+  &:after
+    content: ""
+    position: fixed
+    inset: 0
+    pointer-events: none
+    z-index: 0
+    background: linear-gradient(transparent 0, rgba(116, 198, 255, 0.035) 50%, transparent 100%)
+    background-size: 100% 6px
+    mix-blend-mode: screen
+
+#container
+  z-index: 1
+
+#wrap
+  min-height: 100%
+  height: auto
+  background: transparent
+
+.cosmic-background
+  position: fixed
+  inset: 0
+  overflow: hidden
+  pointer-events: none
+  z-index: 0
+
+.cosmic-orbit
+  position: absolute
+  border: 1px solid rgba(116, 198, 255, 0.16)
+  border-radius: 50%
+  box-shadow: 0 0 70px rgba(116, 247, 209, 0.08), inset 0 0 60px rgba(116, 198, 255, 0.06)
+  transform: rotate(-18deg)
+
+.orbit-alpha
+  width: 720px
+  height: 260px
+  left: -160px
+  top: 120px
+
+.orbit-beta
+  width: 920px
+  height: 340px
+  right: -360px
+  top: 460px
+
+.orbit-gamma
+  width: 520px
+  height: 190px
+  left: 30%
+  bottom: -80px
+
+#header
+  min-height: 430px
+  height: 58vh
+  border-bottom: 1px solid rgba(116, 247, 209, 0.28)
+  box-shadow: inset 0 -120px 120px rgba(5, 9, 21, 0.85)
+  overflow: hidden
+  &:before
+    height: 100%
+    background:
+      radial-gradient(circle at 50% 42%, rgba(116, 247, 209, 0.18), transparent 22%),
+      linear-gradient(rgba(1, 4, 14, 0.34), rgba(1, 4, 14, 0.84))
+  &:after
+    height: 46%
+    background: linear-gradient(transparent, rgba(5, 9, 21, 0.98))
+
+#banner
+  background:
+    radial-gradient(circle at 50% 46%, rgba(116, 247, 209, 0.16), transparent 10%),
+    radial-gradient(circle at 28% 35%, rgba(87, 119, 255, 0.28), transparent 18%),
+    radial-gradient(circle at 74% 24%, rgba(255, 210, 130, 0.14), transparent 16%),
+    linear-gradient(145deg, #020616, #071a34 48%, #03050d)
+  filter: saturate(1.16)
+
+.cosmic-grid
+  position: absolute
+  inset: 0
+  z-index: 0
+  background-image:
+    linear-gradient(rgba(116, 198, 255, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(116, 198, 255, 0.09) 1px, transparent 1px)
+  background-size: 64px 64px
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.65), transparent 75%)
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.65), transparent 75%)
+
+.cosmic-scanline
+  position: absolute
+  left: 0
+  right: 0
+  bottom: 18%
+  height: 1px
+  background: linear-gradient(90deg, transparent, rgba(116,247,209,0.76), transparent)
+  box-shadow: 0 0 28px rgba(116,247,209,0.56)
+  z-index: 2
+
+#header-title
+  top: 47%
+  transform: translateY(-50%)
+  margin-top: 0
+
+.hero-kicker
+  display: inline-block
+  margin-bottom: 18px
+  padding: 8px 14px
+  border: 1px solid rgba(116, 247, 209, 0.28)
+  border-radius: 999px
+  color: #74f7d1
+  font-family: "Source Code Pro", Consolas, monospace
+  font-size: 12px
+  letter-spacing: 0.24em
+  background: rgba(4, 11, 23, 0.62)
+  box-shadow: 0 0 24px rgba(116, 247, 209, 0.12)
+
+#logo
+  color: #f4fbff
+  font-size: 58px
+  font-weight: 700
+  letter-spacing: 0.08em
+  text-transform: uppercase
+  text-shadow: 0 0 24px rgba(116, 247, 209, 0.45), 0 10px 40px rgba(0,0,0,0.82)
+
+#subtitle
+  color: #b8c9e6
+  font-size: 18px
+  letter-spacing: 0.18em
+  text-shadow: 0 0 16px rgba(116, 198, 255, 0.35)
+
+.hero-metrics
+  display: flex
+  justify-content: center
+  flex-wrap: wrap
+  gap: 10px
+  margin-top: 26px
+  span
+    padding: 7px 12px
+    border: 1px solid rgba(116, 198, 255, 0.22)
+    border-radius: 12px
+    color: #c9d7ea
+    background: rgba(4, 11, 23, 0.56)
+    font-family: "Source Code Pro", Consolas, monospace
+    font-size: 12px
+
+.nav-icon,
+.main-nav-link
+  color: #dcecff
+  opacity: 0.78
+  font-family: "Source Code Pro", Consolas, monospace
+  text-transform: uppercase
+  letter-spacing: 0.08em
+  &:hover
+    color: #74f7d1
+    opacity: 1
+    text-decoration: none
+
+.outer
+  max-width: 1180px
+
+#main
+  position: relative
+  z-index: 2
+
+.article
+  margin: 36px 0
+
+.article-inner
+  border: 1px solid rgba(116, 198, 255, 0.18)
+  border-radius: 28px
+  background: linear-gradient(145deg, rgba(8, 19, 38, 0.9), rgba(4, 9, 21, 0.78))
+  box-shadow: 0 22px 80px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.05)
+  backdrop-filter: blur(18px)
+
+.article-meta
+  margin-left: 18px
+
+.article-signal
+  float: left
+  margin-right: 10px
+  padding: 6px 10px
+  border-radius: 999px
+  color: #071426
+  background: linear-gradient(90deg, #74f7d1, #8eb6ff)
+  font-family: "Source Code Pro", Consolas, monospace
+  font-size: 11px
+  font-weight: 700
+  letter-spacing: 0.16em
+
+.article-title
+  color: #edf6ff
+  font-size: 2.22em
+  letter-spacing: 0.02em
+  a&:hover
+    color: #74f7d1
+    text-shadow: 0 0 18px rgba(116, 247, 209, 0.36)
+
+.article-entry
+  color: #c9d7ea
+  font-size: 16px
+  line-height: 1.85
+  h1, h2, h3, h4
+    color: #f4fbff
+    margin-top: 1.8em
+  h2
+    border-left: 4px solid #74f7d1
+    padding-left: 14px
+  a
+    color: #74f7d1
+  strong
+    color: #f6d99d
+  blockquote
+    border-left: 3px solid #8eb6ff
+    margin: 24px 0
+    padding: 12px 18px
+    text-align: left
+    background: rgba(142, 182, 255, 0.08)
+    border-radius: 0 16px 16px 0
+  code
+    color: #74f7d1
+    background: rgba(116, 247, 209, 0.1)
+    border: 1px solid rgba(116, 247, 209, 0.12)
+    border-radius: 6px
+    padding: 0.12em 0.36em
+  table
+    overflow: hidden
+    border-radius: 14px
+    border: 1px solid rgba(116, 198, 255, 0.16)
+  th
+    color: #f4fbff
+    background: rgba(116, 198, 255, 0.1)
+  td, th
+    padding: 11px 12px
+    border-bottom: 1px solid rgba(116, 198, 255, 0.12)
+
+.article-more-link a
+  color: #071426
+  background: linear-gradient(90deg, #74f7d1, #8eb6ff)
+  text-shadow: none
+  font-weight: 700
+  &:hover
+    background: linear-gradient(90deg, #f6d99d, #74f7d1)
+    color: #071426
+
+.article-footer
+  border-top: 1px solid rgba(116, 198, 255, 0.15)
+  a
+    color: #8eb6ff
+    &:hover
+      color: #74f7d1
+
+.article-tag-list-link:before
+  color: #74f7d1
+
+.widget-wrap
+  border: 1px solid rgba(116, 198, 255, 0.16)
+  border-radius: 24px
+  background: rgba(7, 18, 36, 0.64)
+  box-shadow: 0 18px 60px rgba(0,0,0,0.28)
+  backdrop-filter: blur(14px)
+
+.widget-title
+  color: #f4fbff
+  border-bottom: 1px solid rgba(116, 247, 209, 0.22)
+  font-family: "Source Code Pro", Consolas, monospace
+  letter-spacing: 0.12em
+
+.widget a
+  color: #a9bbd9
+  &:hover
+    color: #74f7d1
+
+.archive-article
+  border-left: 1px solid rgba(116, 198, 255, 0.16)
+  padding-left: 18px
+
+#footer
+  margin-top: 64px
+  color: #8ea0bd
+  background: rgba(1, 5, 14, 0.86)
+  border-top: 1px solid rgba(116, 247, 209, 0.16)
+  a
+    color: #74f7d1
+
+.highlight
+  border-radius: 18px
+  overflow: hidden
+  border: 1px solid rgba(116, 247, 209, 0.14)
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04)
+
+@media screen and (max-width: 479px)
+  #header
+    min-height: 520px
+  #logo
+    font-size: 36px
+  .hero-kicker
+    font-size: 10px
+    letter-spacing: 0.14em
+  .article-title
+    font-size: 1.72em
+  .article-entry
+    font-size: 15px
+
+// === Dynamic cosmic layer start ===
+:root
+  --cosmic-mouse-x: 50vw
+  --cosmic-mouse-y: 50vh
+  --cosmic-parallax-x: 0px
+  --cosmic-parallax-y: 0px
+
+#starfield
+  position: fixed
+  inset: 0
+  width: 100vw
+  height: 100vh
+  pointer-events: none
+  z-index: 0
+  opacity: 0.9
+  mix-blend-mode: screen
+
+.cursor-halo
+  position: fixed
+  left: var(--cosmic-mouse-x)
+  top: var(--cosmic-mouse-y)
+  width: 420px
+  height: 420px
+  margin-left: -210px
+  margin-top: -210px
+  pointer-events: none
+  z-index: 1
+  border-radius: 50%
+  background: radial-gradient(circle, rgba(116,247,209,0.18), rgba(142,182,255,0.08) 35%, transparent 66%)
+  filter: blur(8px)
+  opacity: 0
+  transform: scale(0.82)
+  transition: opacity 0.35s ease, transform 0.35s ease
+
+body.cosmic-pointer-active .cursor-halo
+  opacity: 1
+  transform: scale(1)
+
+.cosmic-background
+  transform: translate3d(var(--cosmic-parallax-x), var(--cosmic-parallax-y), 0)
+  transition: transform 0.14s ease-out
+
+.cosmic-orbit
+  animation: orbitBreath 9s ease-in-out infinite alternate
+
+.orbit-beta
+  animation-duration: 13s
+  animation-delay: -3s
+
+.orbit-gamma
+  animation-duration: 16s
+  animation-delay: -6s
+
+#banner
+  animation: nebulaDrift 18s ease-in-out infinite alternate
+
+.cosmic-grid
+  animation: gridDrift 22s linear infinite
+
+.cosmic-scanline
+  animation: scanPulse 4.8s ease-in-out infinite
+
+.hero-kicker
+  position: relative
+  overflow: hidden
+  &:after
+    content: ""
+    position: absolute
+    inset: 0
+    background: linear-gradient(110deg, transparent, rgba(255,255,255,0.38), transparent)
+    transform: translateX(-120%)
+    animation: spectralSweep 4.8s ease-in-out infinite
+
+#logo
+  position: relative
+  display: inline-block
+  &:after
+    content: "_"
+    display: inline-block
+    color: #74f7d1
+    animation: caretBlink 1s steps(2, start) infinite
+
+body.cosmic-ready #logo
+  animation: logoIgnition 1.1s ease both
+
+.hero-metrics span
+  opacity: 0
+  transform: translateY(12px)
+  animation: chipRise 0.72s cubic-bezier(.2,.8,.2,1) forwards
+  &:nth-child(1)
+    animation-delay: 0.18s
+  &:nth-child(2)
+    animation-delay: 0.3s
+  &:nth-child(3)
+    animation-delay: 0.42s
+  &:nth-child(4)
+    animation-delay: 0.54s
+
+.article,
+.widget-wrap
+  opacity: 0
+  transform: translateY(28px) scale(0.985)
+  transition: opacity 0.72s ease, transform 0.72s cubic-bezier(.2,.8,.2,1), box-shadow 0.3s ease, border-color 0.3s ease
+
+.article.in-view,
+.widget-wrap.in-view
+  opacity: 1
+  transform: translateY(0) scale(1)
+
+.article-inner
+  position: relative
+  overflow: hidden
+  transition: transform 0.32s ease, box-shadow 0.32s ease, border-color 0.32s ease
+  &:before
+    content: ""
+    position: absolute
+    inset: -1px
+    pointer-events: none
+    opacity: 0
+    background: radial-gradient(circle at var(--cosmic-card-x, 50%) var(--cosmic-card-y, 50%), rgba(116,247,209,0.18), transparent 34%)
+    transition: opacity 0.28s ease
+  &:after
+    content: ""
+    position: absolute
+    left: -40%
+    top: 0
+    width: 38%
+    height: 100%
+    pointer-events: none
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.10), transparent)
+    transform: skewX(-18deg)
+    transition: left 0.7s ease
+
+.article-inner:hover
+  transform: translateY(-6px)
+  border-color: rgba(116, 247, 209, 0.46)
+  box-shadow: 0 30px 110px rgba(0,0,0,0.48), 0 0 42px rgba(116,247,209,0.12), inset 0 1px 0 rgba(255,255,255,0.08)
+  &:before
+    opacity: 1
+  &:after
+    left: 110%
+
+.main-nav-link
+  position: relative
+  &:after
+    content: ""
+    position: absolute
+    left: 14px
+    right: 14px
+    bottom: 13px
+    height: 1px
+    background: linear-gradient(90deg, transparent, #74f7d1, transparent)
+    transform: scaleX(0)
+    transform-origin: center
+    transition: transform 0.24s ease
+  &:hover:after
+    transform: scaleX(1)
+
+.article-entry pre,
+.article-entry .highlight
+  position: relative
+  &:before
+    content: "SIGNAL TRACE"
+    position: absolute
+    top: 8px
+    right: 14px
+    z-index: 2
+    color: rgba(116,247,209,0.55)
+    font: 10px "Source Code Pro", Consolas, monospace
+    letter-spacing: 0.16em
+
+@keyframes orbitBreath
+  from
+    transform: rotate(-18deg) scale(1)
+    opacity: 0.72
+  to
+    transform: rotate(-11deg) scale(1.08)
+    opacity: 1
+
+@keyframes nebulaDrift
+  from
+    filter: hue-rotate(0deg) saturate(1.12)
+    transform: scale(1)
+  to
+    filter: hue-rotate(18deg) saturate(1.32)
+    transform: scale(1.04)
+
+@keyframes gridDrift
+  from
+    background-position: 0 0, 0 0
+  to
+    background-position: 64px 64px, 64px 64px
+
+@keyframes scanPulse
+  0%, 100%
+    opacity: 0.24
+    transform: translateY(0)
+  50%
+    opacity: 1
+    transform: translateY(-18px)
+
+@keyframes spectralSweep
+  0%, 55%
+    transform: translateX(-120%)
+  100%
+    transform: translateX(120%)
+
+@keyframes caretBlink
+  50%
+    opacity: 0
+
+@keyframes logoIgnition
+  from
+    opacity: 0
+    transform: translateY(12px) scale(0.98)
+    letter-spacing: 0.18em
+    filter: blur(8px)
+  to
+    opacity: 1
+    transform: translateY(0) scale(1)
+    letter-spacing: 0.08em
+    filter: blur(0)
+
+@keyframes chipRise
+  to
+    opacity: 1
+    transform: translateY(0)
+
+@media (prefers-reduced-motion: reduce)
+  *, *:before, *:after
+    animation-duration: 0.001ms !important
+    animation-iteration-count: 1 !important
+    scroll-behavior: auto !important
+    transition-duration: 0.001ms !important
+  #starfield,
+  .cursor-halo
+    display: none
+// === Dynamic cosmic layer end ===
+
+// === Portal guide and sidebar upgrade start ===
+body
+  background:
+    radial-gradient(circle at var(--cosmic-mouse-x, 50vw) var(--cosmic-mouse-y, 50vh), rgba(116, 247, 209, 0.18), transparent 18rem),
+    radial-gradient(circle at 10% 8%, rgba(67, 103, 255, 0.34), transparent 24rem),
+    radial-gradient(circle at 88% 20%, rgba(0, 255, 194, 0.18), transparent 20rem),
+    radial-gradient(circle at 56% 86%, rgba(255, 177, 92, 0.13), transparent 24rem),
+    linear-gradient(145deg, #01030b 0%, #04111f 38%, #020510 68%, #000208 100%)
+
+#wrap
+  background:
+    linear-gradient(90deg, rgba(116,247,209,0.04) 1px, transparent 1px),
+    linear-gradient(rgba(116,247,209,0.035) 1px, transparent 1px)
+  background-size: 72px 72px
+
+.portal-landing
+  position: relative
+  display: grid
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr)
+  gap: 32px
+  align-items: center
+  margin: -8px 0 34px
+  padding: 34px
+  overflow: hidden
+  border: 1px solid rgba(116,247,209,0.22)
+  border-radius: 34px
+  background:
+    radial-gradient(circle at 20% 0%, rgba(116,247,209,0.18), transparent 32%),
+    linear-gradient(135deg, rgba(7, 22, 43, 0.92), rgba(2, 7, 18, 0.78))
+  box-shadow: 0 28px 100px rgba(0,0,0,0.48), inset 0 1px 0 rgba(255,255,255,0.07)
+  backdrop-filter: blur(22px)
+  &:before
+    content: ""
+    position: absolute
+    inset: 0
+    pointer-events: none
+    background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.08) 42%, transparent 58%)
+    transform: translateX(-80%)
+    animation: portalSweep 8s ease-in-out infinite
+
+.portal-panel
+  position: relative
+  z-index: 2
+
+.portal-eyebrow
+  display: inline-flex
+  margin: 0 0 16px
+  padding: 8px 13px
+  border: 1px solid rgba(116,247,209,0.34)
+  border-radius: 999px
+  color: #74f7d1
+  background: rgba(4,14,28,0.78)
+  font: 700 11px "Source Code Pro", Consolas, monospace
+  letter-spacing: 0.2em
+  text-transform: uppercase
+
+.portal-panel h1
+  margin: 0
+  color: #f7fbff
+  font-size: clamp(34px, 5vw, 66px)
+  line-height: 1.02
+  letter-spacing: 0.02em
+  text-shadow: 0 0 32px rgba(116,247,209,0.22)
+
+.portal-copy
+  max-width: 690px
+  margin: 20px 0 0
+  color: #c9d7ea
+  font-size: 17px
+  line-height: 1.9
+
+.portal-actions
+  display: flex
+  flex-wrap: wrap
+  gap: 12px
+  margin-top: 26px
+
+.portal-action
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  min-height: 42px
+  padding: 0 18px
+  border: 1px solid rgba(142,182,255,0.28)
+  border-radius: 999px
+  color: #dcecff
+  background: rgba(7,18,36,0.72)
+  font: 700 13px "Source Code Pro", Consolas, monospace
+  letter-spacing: 0.08em
+  text-decoration: none
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, color 0.25s ease
+  &:hover
+    color: #071426
+    border-color: transparent
+    background: linear-gradient(90deg, #74f7d1, #8eb6ff)
+    box-shadow: 0 0 30px rgba(116,247,209,0.24)
+    transform: translateY(-3px)
+    text-decoration: none
+
+.portal-action.primary
+  color: #071426
+  background: linear-gradient(90deg, #74f7d1, #f6d99d)
+  border-color: transparent
+
+.portal-radar
+  position: relative
+  z-index: 2
+  min-height: 320px
+  border-radius: 50%
+  filter: drop-shadow(0 0 38px rgba(116,247,209,0.18))
+
+.radar-ring,
+.radar-sweep,
+.radar-core
+  position: absolute
+  left: 50%
+  top: 50%
+  transform: translate(-50%, -50%)
+  border-radius: 50%
+
+.radar-ring
+  border: 1px solid rgba(116,247,209,0.28)
+  box-shadow: inset 0 0 34px rgba(116,247,209,0.08), 0 0 22px rgba(142,182,255,0.12)
+
+.ring-one
+  width: 92px
+  height: 92px
+
+.ring-two
+  width: 184px
+  height: 184px
+
+.ring-three
+  width: 286px
+  height: 286px
+
+.radar-sweep
+  width: 286px
+  height: 286px
+  background: conic-gradient(from 0deg, rgba(116,247,209,0.45), rgba(116,247,209,0.06), transparent 26%)
+  animation: radarSpin 5.2s linear infinite
+
+.radar-core
+  width: 18px
+  height: 18px
+  background: #f6d99d
+  box-shadow: 0 0 26px rgba(246,217,157,0.85)
+
+.mission-grid
+  display: grid
+  grid-template-columns: repeat(3, minmax(0, 1fr))
+  gap: 18px
+  margin: 0 0 40px
+
+.mission-card
+  position: relative
+  min-height: 172px
+  padding: 24px
+  overflow: hidden
+  border: 1px solid rgba(116,198,255,0.18)
+  border-radius: 26px
+  color: #c9d7ea
+  background: linear-gradient(145deg, rgba(9, 23, 45, 0.86), rgba(3, 9, 21, 0.72))
+  box-shadow: 0 20px 70px rgba(0,0,0,0.34)
+  text-decoration: none
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease
+  &:before
+    content: ""
+    position: absolute
+    inset: auto -20% -45% -20%
+    height: 120px
+    background: radial-gradient(circle, rgba(116,247,209,0.18), transparent 68%)
+  &:hover
+    color: #dcecff
+    transform: translateY(-6px)
+    border-color: rgba(116,247,209,0.44)
+    box-shadow: 0 30px 100px rgba(0,0,0,0.46), 0 0 34px rgba(116,247,209,0.12)
+    text-decoration: none
+  h2
+    margin: 26px 0 12px
+    color: #f7fbff
+    font-size: 24px
+  p
+    margin: 0
+    line-height: 1.72
+
+.mission-index
+  color: #74f7d1
+  font: 700 12px "Source Code Pro", Consolas, monospace
+  letter-spacing: 0.2em
+
+.latest-transmissions
+  .section-heading
+    margin: 0 0 18px
+    span
+      color: #74f7d1
+      font: 700 11px "Source Code Pro", Consolas, monospace
+      letter-spacing: 0.22em
+      text-transform: uppercase
+    h2
+      margin: 6px 0 0
+      color: #f7fbff
+      font-size: 28px
+
+#sidebar
+  position: relative
+  z-index: 3
+
+.sidebar-command
+  margin: 36px 0 20px
+  padding: 20px
+  border: 1px solid rgba(116,247,209,0.28)
+  border-radius: 24px
+  color: #c9d7ea
+  background:
+    radial-gradient(circle at 100% 0%, rgba(116,247,209,0.18), transparent 38%),
+    linear-gradient(145deg, rgba(7, 22, 43, 0.92), rgba(2, 8, 18, 0.86))
+  box-shadow: 0 18px 60px rgba(0,0,0,0.34)
+  strong
+    display: block
+    margin-top: 6px
+    color: #f7fbff
+    font-size: 19px
+    letter-spacing: 0.08em
+  p
+    margin: 10px 0 0
+    color: #9fb3d2
+    line-height: 1.65
+
+.sidebar-command-kicker
+  color: #74f7d1
+  font: 700 10px "Source Code Pro", Consolas, monospace
+  letter-spacing: 0.22em
+
+.widget-wrap
+  border-color: rgba(116,247,209,0.26)
+  background:
+    linear-gradient(145deg, rgba(9, 24, 46, 0.92), rgba(2, 8, 20, 0.84)),
+    radial-gradient(circle at 100% 0%, rgba(142,182,255,0.16), transparent 42%)
+  box-shadow: 0 20px 80px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.06)
+
+.widget-title
+  display: flex
+  align-items: center
+  justify-content: space-between
+  gap: 10px
+  margin: 0 0 10px
+  padding: 0 0 12px
+  color: #ffffff
+  font-size: 15px
+  text-shadow: 0 0 16px rgba(116,247,209,0.28)
+  span
+    color: #74f7d1
+    font-size: 10px
+    letter-spacing: 0.18em
+    text-transform: uppercase
+
+.widget
+  color: #d8e6ff !important
+  text-shadow: none !important
+  background: rgba(3, 11, 24, 0.48) !important
+  border: 1px solid rgba(116,198,255,0.18) !important
+  border-radius: 18px !important
+  box-shadow: inset 0 0 26px rgba(116,247,209,0.04) !important
+  a
+    color: #dcecff !important
+    font-weight: 700
+    text-decoration: none !important
+    text-shadow: 0 0 12px rgba(116,247,209,0.16)
+    &:hover
+      color: #74f7d1 !important
+      text-decoration: none !important
+  li
+    margin: 8px 0
+    padding: 7px 10px
+    border: 1px solid rgba(142,182,255,0.12)
+    border-radius: 12px
+    background: rgba(7,18,36,0.52)
+
+.category-list-count,
+.tag-list-count,
+.archive-list-count
+  float: right
+  color: #f6d99d !important
+  font-weight: 700
+
+.tagcloud
+  line-height: 2.35
+  a
+    margin: 0 6px 8px 0 !important
+    padding: 6px 10px
+    border: 1px solid rgba(116,247,209,0.24)
+    border-radius: 999px
+    background: rgba(116,247,209,0.08)
+    color: #dcecff !important
+    font-size: 13px !important
+    &:hover
+      color: #071426 !important
+      background: linear-gradient(90deg, #74f7d1, #8eb6ff)
+
+@keyframes radarSpin
+  to
+    transform: translate(-50%, -50%) rotate(360deg)
+
+@keyframes portalSweep
+  0%, 55%
+    transform: translateX(-90%)
+  100%
+    transform: translateX(90%)
+
+@media screen and (max-width: 900px)
+  .portal-landing,
+  .mission-grid
+    grid-template-columns: 1fr
+  .portal-radar
+    min-height: 230px
+  .ring-three,
+  .radar-sweep
+    width: 220px
+    height: 220px
+  .ring-two
+    width: 148px
+    height: 148px
+
+@media screen and (max-width: 479px)
+  .portal-landing
+    padding: 24px
+    border-radius: 24px
+  .portal-panel h1
+    font-size: 34px
+  .portal-actions
+    flex-direction: column
+  .portal-action
+    width: 100%
+// === Portal guide and sidebar upgrade end ===
