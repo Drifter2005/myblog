@@ -9,32 +9,26 @@
     <%- partial('post/gallery') %>
     <% if (index){ %>
       <% var previewText = strip_html(post.excerpt || post.content); %>
-      <details class="article-expand">
-        <summary class="article-summary">
-          <div class="article-meta">
-            <span class="article-signal">OBSERVATION</span>
-            <%- partial('post/date', {class_name: 'article-date', date_format: null}) %>
-            <%- partial('post/category') %>
-          </div>
-          <% if (post.link || post.title){ %>
-            <header class="article-header">
-              <h1 class="p-name article-title"><%= post.title %></h1>
-            </header>
-          <% } %>
-          <div class="article-entry article-preview">
-            <p><%= previewText.slice(0, 280) %><% if (previewText.length > 280){ %>...<% } %></p>
-          </div>
-          <span class="article-expand-hint">点击展开全文</span>
-        </summary>
-        <div class="article-expanded">
-          <div class="e-content article-entry" itemprop="articleBody">
-            <%- post.content %>
-          </div>
-          <p class="article-more-link">
-            <a href="<%- url_for(post.path) %>">打开独立文章页</a>
-          </p>
+      <div class="article-summary">
+        <div class="article-meta">
+          <span class="article-signal">OBSERVATION</span>
+          <%- partial('post/date', {class_name: 'article-date', date_format: null}) %>
+          <%- partial('post/category') %>
         </div>
-      </details>
+        <% if (post.link || post.title){ %>
+          <header class="article-header">
+            <h1 class="p-name article-title">
+              <a href="<%- url_for(post.path) %>"><%= post.title %></a>
+            </h1>
+          </header>
+        <% } %>
+        <div class="article-entry article-preview">
+          <p><%= previewText.slice(0, 280) %><% if (previewText.length > 280){ %>...<% } %></p>
+        </div>
+        <p class="article-more-link">
+          <a href="<%- url_for(post.path) %>">阅读全文</a>
+        </p>
+      </div>
     <% } else { %>
       <% if (post.link || post.title){ %>
         <header class="article-header">
