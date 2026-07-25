@@ -715,6 +715,206 @@ body
   gap: 18px
   margin: 0 0 40px
 
+.guide-grid
+  display: grid
+  grid-template-columns: repeat(3, minmax(0, 1fr))
+  gap: 18px
+  margin: 0 0 40px
+
+.guide-card
+  border: 1px solid rgba(116,198,255,0.2)
+  border-radius: 24px
+  background: linear-gradient(145deg, rgba(9,23,45,0.88), rgba(3,9,21,0.76))
+  box-shadow: 0 20px 70px rgba(0,0,0,0.34)
+  overflow: hidden
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease
+  &:hover
+    border-color: rgba(116,247,209,0.42)
+    box-shadow: 0 28px 90px rgba(0,0,0,0.45), 0 0 30px rgba(116,247,209,0.1)
+    transform: translateY(-4px)
+  &[open]
+    grid-column: span 1
+    border-color: rgba(116,247,209,0.56)
+
+.guide-card summary
+  display: flex
+  align-items: center
+  gap: 14px
+  min-height: 142px
+  padding: 22px
+  cursor: pointer
+  list-style: none
+  &::-webkit-details-marker
+    display: none
+
+.guide-card-index
+  color: #74f7d1
+  font: 700 12px "Source Code Pro", Consolas, monospace
+  letter-spacing: 0.16em
+
+.guide-card-heading
+  flex: 1
+  strong, small
+    display: block
+  strong
+    color: #f7fbff
+    font-size: 22px
+  small
+    margin-top: 9px
+    color: #a9bbd9
+    line-height: 1.6
+
+.guide-card-toggle
+  color: #74f7d1
+  font-size: 28px
+  line-height: 1
+  transition: transform 0.3s ease
+
+.guide-card[open] .guide-card-toggle
+  transform: rotate(45deg)
+
+.guide-card-body
+  padding: 0 22px 22px 54px
+  color: #c9d7ea
+  line-height: 1.75
+  border-top: 1px solid rgba(116,198,255,0.12)
+  p
+    margin: 18px 0
+
+.guide-card-link
+  display: inline-block
+  color: #071426
+  background: linear-gradient(90deg, #74f7d1, #8eb6ff)
+  border-radius: 999px
+  padding: 8px 14px
+  font: 700 12px "Source Code Pro", Consolas, monospace
+  text-decoration: none
+
+.article-expand
+  &[open]
+    .article-summary
+      border-bottom: 1px solid rgba(116,198,255,0.16)
+    .article-expand-hint
+      color: #f6d99d
+
+.article:has(.article-expand[open])
+  .article-inner
+    width: calc(100vw - 96px)
+    max-width: 1060px
+    margin-left: 50%
+    transform: translateX(-50%)
+    border-color: rgba(116,247,209,0.5)
+    box-shadow: 0 30px 110px rgba(0,0,0,0.5), 0 0 44px rgba(116,247,209,0.12)
+
+.article:has(.article-expand[open]) .article-expand-hint
+  color: #f6d99d
+
+.article-summary
+  display: block
+  cursor: pointer
+  list-style: none
+  &::-webkit-details-marker
+    display: none
+  .article-meta
+    margin-left: 18px
+
+.article-preview
+  max-height: 168px
+  overflow: hidden
+  mask-image: linear-gradient(to bottom, #000 72%, transparent)
+
+.article-expand-hint
+  display: block
+  margin: 0 article-padding 24px
+  color: #74f7d1
+  font: 700 12px "Source Code Pro", Consolas, monospace
+  letter-spacing: 0.08em
+
+.article-expanded
+  padding-top: 4px
+
+.post-wide-shell
+  max-width: 1060px
+  margin: 0 auto
+  .article-inner
+    border-radius: 32px
+  .article-entry
+    font-size: 17px
+
+.guide-page
+  max-width: 1060px
+  margin: 38px auto
+
+.guide-page-header,
+.guide-posts
+  padding: 30px
+  border: 1px solid rgba(116,198,255,0.2)
+  border-radius: 28px
+  background: linear-gradient(145deg, rgba(8,19,38,0.9), rgba(4,9,21,0.78))
+  box-shadow: 0 22px 80px rgba(0,0,0,0.38)
+
+.guide-page-header
+  .guide-page-copy
+    color: #c9d7ea
+    line-height: 1.85
+    h2, h3
+      color: #f4fbff
+      margin-top: 1.7em
+
+.guide-page-kicker,
+.guide-posts-heading span
+  color: #74f7d1
+  font: 700 11px "Source Code Pro", Consolas, monospace
+  letter-spacing: 0.2em
+
+.guide-page-header h1
+  margin: 10px 0 20px
+  color: #f7fbff
+  font-size: 42px
+
+.guide-posts
+  margin-top: 22px
+
+.guide-posts-heading h2
+  margin: 8px 0 20px
+  color: #f7fbff
+
+.guide-post-list
+  display: grid
+  gap: 10px
+
+.guide-post-item
+  display: flex
+  align-items: center
+  justify-content: space-between
+  gap: 20px
+  padding: 16px 18px
+  border: 1px solid rgba(142,182,255,0.14)
+  border-radius: 16px
+  color: #dcecff
+  background: rgba(3,11,24,0.48)
+  text-decoration: none
+  transition: border-color 0.25s ease, transform 0.25s ease
+  &:hover
+    border-color: rgba(116,247,209,0.46)
+    transform: translateX(5px)
+    text-decoration: none
+  strong, small, time
+    display: block
+  strong
+    color: #f4fbff
+  small
+    margin-top: 5px
+    color: #9fb3d2
+    line-height: 1.5
+  time
+    flex: 0 0 auto
+    color: #74f7d1
+    font: 12px "Source Code Pro", Consolas, monospace
+
+.guide-empty
+  color: #9fb3d2
+
 .mission-card
   position: relative
   min-height: 172px
@@ -873,7 +1073,8 @@ body
 
 @media screen and (max-width: 900px)
   .portal-landing,
-  .mission-grid
+  .mission-grid,
+  .guide-grid
     grid-template-columns: 1fr
   .portal-radar
     min-height: 230px
@@ -895,4 +1096,16 @@ body
     flex-direction: column
   .portal-action
     width: 100%
+  .guide-card-body
+    padding-left: 22px
+  .guide-page-header,
+  .guide-posts
+    padding: 22px
+  .guide-page-header h1
+    font-size: 34px
+  .guide-post-item
+    align-items: flex-start
+    flex-direction: column
+  .article:has(.article-expand[open]) .article-inner
+    width: calc(100vw - 28px)
 // === Portal guide and sidebar upgrade end ===

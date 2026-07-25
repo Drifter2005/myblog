@@ -1,28 +1,51 @@
 <article id="<%= post.layout %>-<%= post.slug %>" class="h-entry article article-type-<%= post.layout %>" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <span class="article-signal">OBSERVATION</span>
-    <%- partial('post/date', {class_name: 'article-date', date_format: null}) %>
-    <%- partial('post/category') %>
-  </div>
+  <% if (!index){ %>
+    <div class="article-meta">
+      <span class="article-signal">OBSERVATION</span>
+      <%- partial('post/date', {class_name: 'article-date', date_format: null}) %>
+      <%- partial('post/category') %>
+    </div>
+  <% } %>
   <div class="article-inner">
     <%- partial('post/gallery') %>
-    <% if (post.link || post.title){ %>
-      <header class="article-header">
-        <%- partial('post/title', {class_name: 'p-name article-title'}) %>
-      </header>
-    <% } %>
-    <div class="e-content article-entry" itemprop="articleBody">
-      <% if (post.excerpt && index){ %>
-        <%- post.excerpt %>
-        <% if (theme.excerpt_link){ %>
+    <% if (index){ %>
+      <% var previewText = strip_html(post.excerpt || post.content); %>
+      <details class="article-expand">
+        <summary class="article-summary">
+          <div class="article-meta">
+            <span class="article-signal">OBSERVATION</span>
+            <%- partial('post/date', {class_name: 'article-date', date_format: null}) %>
+            <%- partial('post/category') %>
+          </div>
+          <% if (post.link || post.title){ %>
+            <header class="article-header">
+              <h1 class="p-name article-title"><%= post.title %></h1>
+            </header>
+          <% } %>
+          <div class="article-entry article-preview">
+            <p><%= previewText.slice(0, 280) %><% if (previewText.length > 280){ %>...<% } %></p>
+          </div>
+          <span class="article-expand-hint">点击展开全文</span>
+        </summary>
+        <div class="article-expanded">
+          <div class="e-content article-entry" itemprop="articleBody">
+            <%- post.content %>
+          </div>
           <p class="article-more-link">
-            <a href="<%- url_for(post.path) %>#more"><%= theme.excerpt_link %></a>
+            <a href="<%- url_for(post.path) %>">打开独立文章页</a>
           </p>
-        <% } %>
-      <% } else { %>
-        <%- post.content %>
+        </div>
+      </details>
+    <% } else { %>
+      <% if (post.link || post.title){ %>
+        <header class="article-header">
+          <%- partial('post/title', {class_name: 'p-name article-title'}) %>
+        </header>
       <% } %>
-    </div>
+      <div class="e-content article-entry" itemprop="articleBody">
+        <%- post.content %>
+      </div>
+    <% } %>
     <footer class="article-footer">
       <a data-url="<%- post.permalink %>" data-id="<%= post._id %>" data-title="<%= post.title %>" class="article-share-link"><span class="fa fa-share"><%= __('share') %></span></a>
       <% if (post.comments && theme.disqus_shortname){ %>

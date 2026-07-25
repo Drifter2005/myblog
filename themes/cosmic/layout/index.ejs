@@ -18,22 +18,49 @@
   </div>
 </section>
 
-<section class="mission-grid">
-  <a class="mission-card" href="<%- url_for('/algorithm/') %>">
-    <span class="mission-index">01</span>
-    <h2>算法星图</h2>
-    <p>图论、动态规划、数论与数据结构，用复杂度和不变量校准每条轨道。</p>
-  </a>
-  <a class="mission-card" href="<%- url_for('/ctf/') %>">
-    <span class="mission-index">02</span>
-    <h2>CTF 档案</h2>
-    <p>Web、Crypto、Reverse、Pwn 与 Misc，记录漏洞成因、利用链和修复思路。</p>
-  </a>
-  <a class="mission-card" href="<%- url_for('/about/') %>">
-    <span class="mission-index">03</span>
-    <h2>关于观测站</h2>
-    <p>把零散训练沉淀成可复用的知识结构，让每一次探索都留下坐标。</p>
-  </a>
+<section class="guide-grid" aria-label="观测站引导">
+  <details class="guide-card">
+    <summary>
+      <span class="guide-card-index">01</span>
+      <span class="guide-card-heading">
+        <strong>算法星图</strong>
+        <small>图论、动态规划、数论与数据结构的训练坐标。</small>
+      </span>
+      <span class="guide-card-toggle" aria-hidden="true">+</span>
+    </summary>
+    <div class="guide-card-body">
+      <p>从状态定义、边权建模和复杂度上限出发，把算法题拆成可以验证的轨道。</p>
+      <a class="guide-card-link" href="<%- url_for('/algorithm/') %>">进入完整引导</a>
+    </div>
+  </details>
+  <details class="guide-card">
+    <summary>
+      <span class="guide-card-index">02</span>
+      <span class="guide-card-heading">
+        <strong>CTF 档案</strong>
+        <small>Web、Crypto、Reverse、Pwn 与 Misc 的复盘入口。</small>
+      </span>
+      <span class="guide-card-toggle" aria-hidden="true">+</span>
+    </summary>
+    <div class="guide-card-body">
+      <p>保存漏洞成因、验证证据、利用链和修复思路，不只留下最终 payload。</p>
+      <a class="guide-card-link" href="<%- url_for('/ctf/') %>">进入完整引导</a>
+    </div>
+  </details>
+  <details class="guide-card">
+    <summary>
+      <span class="guide-card-index">03</span>
+      <span class="guide-card-heading">
+        <strong>随记</strong>
+        <small>工程记录、工具笔记与暂时无法归类的观察。</small>
+      </span>
+      <span class="guide-card-toggle" aria-hidden="true">+</span>
+    </summary>
+    <div class="guide-card-body">
+      <p>把环境配置、博客维护和正在形成的想法放在这里，给知识留下一个安静的位置。</p>
+      <a class="guide-card-link" href="<%- url_for('/about/') %>">进入完整引导</a>
+    </div>
+  </details>
 </section>
 
 <section class="latest-transmissions">

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <%- partial('_partial/head') %>
-<body>
+<body class="page-layout-<%= page.layout || 'default' %>">
   <canvas id="starfield" aria-hidden="true"></canvas>
   <div class="cursor-halo" aria-hidden="true"></div>
   <div class="cosmic-background" aria-hidden="true">

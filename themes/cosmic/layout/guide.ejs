@@ -1,0 +1,55 @@
+<div class="guide-page">
+  <header class="guide-page-header">
+    <span class="guide-page-kicker">OBSERVATORY GUIDE</span>
+    <h1><%= page.title %></h1>
+    <div class="guide-page-copy">
+      <%- page.content %>
+    </div>
+  </header>
+
+  <section class="guide-posts">
+    <% var kind = page.guide_kind || 'notes'; %>
+    <% function categoryNames(post) {
+      var names = [];
+      if (post.categories && post.categories.length) {
+        post.categories.forEach(function(category) {
+          names.push(String(category.name || category.slug || '').toLowerCase());
+        });
+      }
+      return names.join(' ');
+    } %>
+    <% var selected = site.posts.sort('date', -1).filter(function(post) {
+      var names = categoryNames(post);
+      if (kind === 'algorithm') {
+        return names.indexOf('algorithm') !== -1 || names.indexOf('算法') !== -1;
+      }
+      if (kind === 'ctf') {
+        return names.indexOf('ctf') !== -1;
+      }
+      return names.indexOf('algorithm') === -1 &&
+        names.indexOf('算法') === -1 &&
+        names.indexOf('ctf') === -1;
+    }); %>
+
+    <div class="guide-posts-heading">
+      <span>ARCHIVE SIGNALS</span>
+      <h2><%= kind === 'algorithm' ? '算法文章' : kind === 'ctf' ? 'CTF 文章' : '随记文章' %></h2>
+    </div>
+
+    <% if (selected.length) { %>
+      <div class="guide-post-list">
+        <% selected.each(function(post) { %>
+          <a class="guide-post-item" href="<%- url_for(post.path) %>">
+            <span class="guide-post-item-main">
+              <strong><%= post.title %></strong>
+              <small><%= post.excerpt ? strip_html(post.excerpt).slice(0, 120) : strip_html(post.content).slice(0, 120) %>...</small>
+            </span>
+            <time datetime="<%= post.date.toISOString() %>"><%= date(post.date, 'YYYY-MM-DD') %></time>
+          </a>
+        <% }); %>
+      </div>
+    <% } else { %>
+      <p class="guide-empty">暂时还没有进入这个档案的文章。</p>
+    <% } %>
+  </section>
+</div>
