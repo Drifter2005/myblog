@@ -858,17 +858,44 @@ body
   .article-inner
     overflow: visible
   .article-header
-    padding: 30px 34px 0
+    padding: 34px 44px 0
   .article-title
-    font-size: 2.15em
+    font-size: 2.28em
     line-height: 1.22
   .article-entry
-    padding: 0 34px
-    max-width: 920px
+    padding: 0 44px 36px
+    max-width: 940px
     margin: 0 auto
+    font-size: 18px
+    line-height: 1.9
+    word-break: break-word
+  .article-entry pre,
+  .article-entry .highlight
+    margin-left: 0
+    margin-right: 0
+    max-width: 100%
+    overflow-x: auto
+  .article-entry .highlight table
+    table-layout: auto
+  .article-entry .highlight .code
+    min-width: 0
+  .article-entry .highlight .line
+    white-space: pre
   .article-footer
     margin-left: 34px
     margin-right: 34px
+
+@media screen and (max-width: 767px)
+  .page-layout-post
+    .article-header
+      padding: 24px 22px 0
+    .article-title
+      font-size: 1.82em
+    .article-entry
+      padding: 0 22px 28px
+      font-size: 16px
+    #article-nav
+      padding: 0 12px
 
 .guide-page
   max-width: 1060px
