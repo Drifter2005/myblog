@@ -1,13 +1,23 @@
+// BUILD RULES — do not break these (both verified against this toolchain):
+// 1. CSS min()/max() are eaten by Stylus built-ins (`min(34em,100%)` silently
+//    becomes `34em`). Always write unquote("min(34em, 100%)"). clamp() is safe.
+// 2. Never use color-mix() in .styl files — Stylus hard-errors and CI goes red.
+// NOTE: color-default / color-grey / color-border / color-background / color-link
+// are referenced ~50 times across 13 files. Never delete them (Stylus would
+// silently emit invalid CSS like `color: color-grey`) — only redirect values.
+
 // Config
 support-for-ie = false
-vendor-prefixes = webkit moz ms official
+vendor-prefixes = webkit official
+// Stylus 核心的 @keyframes 展开走另一个变量（vendors），一并收窄
+vendors = webkit official
 
-// Colors
-color-default = #555
-color-grey = #999
-color-border = #ddd
-color-link = #258fb8
-color-background = #eee
+// Colors (redirected to the cosmic dark theme — landscape light values removed)
+color-default = #c9d7ea
+color-grey = #8fa3c0
+color-border = rgba(116, 198, 255, 0.16)
+color-link = #74f7d1
+color-background = #030611
 color-sidebar-text = #777
 color-widget-background = #ddd
 color-widget-border = #ccc
@@ -18,17 +28,22 @@ color-facebook = #3b5998
 color-pinterest = #cb2027
 color-linkedin = #0077B5
 
-// Fonts
+// Fonts — Latin first, CJK fallbacks after, generic keyword last.
+// font-mono: named CJK fonts must come BEFORE the generic `monospace`,
+// otherwise CJK glyphs resolve at `monospace` (SimSun on Windows).
 font-sans = -apple-system, BlinkMacSystemFont,
     "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
     "Fira Sans", "Droid Sans", "Helvetica Neue",
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
     sans-serif
 font-serif = "Playfair Display", Georgia, "Times New Roman", serif
-font-mono = "Source Code Pro", Fira Code, Consolas, Monaco, monospace
+font-mono = "Source Code Pro", "Fira Code", Consolas, Monaco, "PingFang SC", "Microsoft YaHei", monospace, sans-serif
 font-icon = ForkAwesome
 font-size = 15px
-line-height = 1.65em
-line-height-title = 1.15em
+// Unitless on purpose: a length line-height does not scale with inherited
+// font-size. Use unit(line-height, em) where a length is actually needed.
+line-height = 1.65
+line-height-title = 1.3
 
 // Header
 logo-size = 40px

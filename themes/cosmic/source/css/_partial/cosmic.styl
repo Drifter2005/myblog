@@ -136,7 +136,7 @@ body
   border: 1px solid rgba(116, 247, 209, 0.28)
   border-radius: 999px
   color: #74f7d1
-  font-family: "Source Code Pro", Consolas, monospace
+  font-family: font-mono
   font-size: 12px
   letter-spacing: 0.24em
   background: rgba(4, 11, 23, 0.62)
@@ -145,6 +145,9 @@ body
 #logo
   color: #f4fbff
   font-size: 58px
+  // header.styl 的 line-height 按 40px 字号写死，这里字号放大后必须同步，
+  // 否则标题换行时字形重叠。
+  line-height: 1.15
   font-weight: 700
   letter-spacing: 0.08em
   text-transform: uppercase
@@ -153,7 +156,9 @@ body
 #subtitle
   color: #b8c9e6
   font-size: 18px
-  letter-spacing: 0.18em
+  line-height: 1.5
+  // 副标题是中文：字距归零（0.18em 会把汉字拆散）
+  letter-spacing: 0
   text-shadow: 0 0 16px rgba(116, 198, 255, 0.35)
 
 .hero-metrics
@@ -168,20 +173,28 @@ body
     border-radius: 12px
     color: #c9d7ea
     background: rgba(4, 11, 23, 0.56)
-    font-family: "Source Code Pro", Consolas, monospace
+    font-family: font-mono
     font-size: 12px
 
 .nav-icon,
 .main-nav-link
   color: #dcecff
   opacity: 0.78
-  font-family: "Source Code Pro", Consolas, monospace
-  text-transform: uppercase
-  letter-spacing: 0.08em
+  font-family: font-mono
   &:hover
     color: #74f7d1
     opacity: 1
     text-decoration: none
+
+.nav-icon
+  text-transform: uppercase
+  letter-spacing: 0.08em
+
+// 菜单标签是中文（首页/算法星图/…）：中文字距一律归零，
+// font-mono 已带 CJK 回退，不会落到宋体。
+.main-nav-link
+  text-transform: none
+  letter-spacing: 0
 
 .outer
   max-width: 1180px
@@ -211,7 +224,7 @@ body
   border-radius: 999px
   color: #071426
   background: linear-gradient(90deg, #74f7d1, #8eb6ff)
-  font-family: "Source Code Pro", Consolas, monospace
+  font-family: font-mono
   font-size: 11px
   font-weight: 700
   letter-spacing: 0.16em
@@ -332,8 +345,9 @@ body
 .widget-title
   color: #f4fbff
   border-bottom: 1px solid rgba(116, 247, 209, 0.18)
-  font-family: "Source Code Pro", Consolas, monospace
-  letter-spacing: 0.12em
+  font-family: font-mono
+  // 标题主文案是中文（归档/分类/…）：字距归零；内部拉丁角标 span 单独保留字距
+  letter-spacing: 0
   font-weight: 600
   transition: color 0.3s ease
 
@@ -475,11 +489,6 @@ body.cosmic-pointer-active .cursor-halo
 #logo
   position: relative
   display: inline-block
-  &:after
-    content: "_"
-    display: inline-block
-    color: #74f7d1
-    animation: caretBlink 1s steps(2, start) infinite
 
 body.cosmic-ready #logo
   animation: logoIgnition 1.1s ease both
@@ -568,21 +577,8 @@ body.cosmic-ready #logo
   &:hover:after
     transform: scaleX(1)
 
-.article-entry pre,
-.article-entry .highlight
-  position: relative
-  margin: 20px 0
-  &:before
-    content: "SIGNAL TRACE"
-    position: absolute
-    top: 10px
-    right: 14px
-    z-index: 2
-    color: rgba(116,247,209,0.48)
-    font: 600 9px "Source Code Pro", Consolas, monospace
-    letter-spacing: 0.18em
-    text-transform: uppercase
-    pointer-events: none
+// （SIGNAL TRACE 角标已删：选择器命中嵌套结构时每块渲染 3 个，且压行号。
+//  代码块的 margin 收进 highlight.styl 的 $code-block。）
 
 @keyframes orbitBreath
   from
@@ -619,10 +615,6 @@ body.cosmic-ready #logo
     transform: translateX(-120%)
   100%
     transform: translateX(120%)
-
-@keyframes caretBlink
-  50%
-    opacity: 0
 
 @keyframes logoIgnition
   from
@@ -730,7 +722,7 @@ body
   border-radius: 999px
   color: #74f7d1
   background: rgba(4,14,28,0.78)
-  font: 700 11px "Source Code Pro", Consolas, monospace
+  font: 700 11px font-mono
   letter-spacing: 0.2em
   text-transform: uppercase
 
@@ -738,8 +730,9 @@ body
   margin: 0
   color: #f7fbff
   font-size: clamp(34px, 5vw, 66px)
-  line-height: 1.02
-  letter-spacing: 0.02em
+  line-height: 1.12
+  // 中文大标题：字距归零
+  letter-spacing: 0
   text-shadow: 0 0 32px rgba(116,247,209,0.22)
 
 .portal-copy
@@ -765,8 +758,9 @@ body
   border-radius: 999px
   color: #dcecff
   background: rgba(7,18,36,0.72)
-  font: 700 13px "Source Code Pro", Consolas, monospace
-  letter-spacing: 0.08em
+  font: 700 13px font-mono
+  // 按钮文案是中文（启动算法星图/…）：字距归零
+  letter-spacing: 0
   text-decoration: none
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, color 0.25s ease
   &:hover
@@ -868,7 +862,7 @@ body
 
 .guide-card-index
   color: #74f7d1
-  font: 700 12px "Source Code Pro", Consolas, monospace
+  font: 700 12px font-mono
   letter-spacing: 0.16em
 
 .guide-card-heading
@@ -906,7 +900,7 @@ body
   background: linear-gradient(90deg, #74f7d1, #8eb6ff)
   border-radius: 999px
   padding: 8px 14px
-  font: 700 12px "Source Code Pro", Consolas, monospace
+  font: 700 12px font-mono
   text-decoration: none
 
 .article-summary
@@ -998,18 +992,124 @@ body
   background: linear-gradient(145deg, rgba(8,19,38,0.9), rgba(4,9,21,0.78))
   box-shadow: 0 22px 80px rgba(0,0,0,0.38)
 
-.guide-page-header
-  .guide-page-copy
-    color: #c9d7ea
-    line-height: 1.85
-    h2, h3
-      color: #f4fbff
-      margin-top: 1.7em
+// 栏目页正文（layout: guide 的 page.content）：global-reset 后所有内容
+// 元素都是裸样式，这里补一套与 .article-entry 一致的内容排版。
+.guide-page-copy
+  color: #c9d7ea
+  font-size: 16px
+  line-height: 1.85
+  word-break: break-word
+  p
+    margin: 1.1em 0
+  ul, ol
+    margin: 1.1em 0
+    padding-left: 1.7em
+  ul
+    list-style: disc
+  ol
+    list-style: decimal
+  ul ul, ol ol, ul ol, ol ul
+    margin-top: 0.3em
+    margin-bottom: 0.3em
+  li
+    margin: 0.4em 0
+  a
+    color: #74f7d1
+    text-decoration: none
+    &:hover
+      text-decoration: underline
+  strong
+    color: #f6d99d
+    font-weight: 600
+  em
+    color: #b8c9e6
+    font-style: italic
+  h2, h3, h4
+    color: #f4fbff
+    margin: 1.6em 0 0.7em
+    font-weight: 600
+  h2
+    font-size: 1.5em
+    border-left: 3px solid #74f7d1
+    padding-left: 14px
+  h3
+    font-size: 1.25em
+  h4
+    font-size: 1.1em
+  code
+    color: #74f7d1
+    background: rgba(116, 247, 209, 0.08)
+    border: 1px solid rgba(116, 247, 209, 0.14)
+    border-radius: 5px
+    padding: 0.15em 0.4em
+    font-family: font-mono
+    font-variant-ligatures: none
+    font-feature-settings: "calt" 0, "liga" 0
+    font-size: 0.95em
+  pre, .highlight
+    margin: 20px 0
+    padding: 15px article-padding
+    border: 1px solid color-border
+    border-radius: 14px
+    background: rgba(2, 6, 18, 0.62)
+    overflow: auto
+    color: #cccccc
+    font-family: font-mono
+    font-variant-ligatures: none
+    font-feature-settings: "calt" 0, "liga" 0
+    line-height: 1.7
+    code
+      color: inherit
+      background: transparent
+      border: none
+      padding: 0
+  .highlight
+    pre
+      margin: 0
+      padding: 0
+      border: none
+      background: transparent
+    table, td, th
+      margin: 0
+      border: none
+      padding: 0
+      background: transparent
+    .gutter pre
+      color: #8fa3c0
+      text-align: right
+      padding-right: 16px
+      user-select: none
+  blockquote
+    border-left: 3px solid #8eb6ff
+    margin: 24px 0
+    padding: 12px 18px
+    background: rgba(142, 182, 255, 0.06)
+    border-radius: 0 14px 14px 0
+    color: #b8c9e6
+  table
+    width: 100%
+    margin: 20px 0
+    border: 1px solid rgba(116, 198, 255, 0.14)
+    border-radius: 14px
+    overflow: hidden
+    border-collapse: collapse
+  th
+    color: #f4fbff
+    background: rgba(116, 198, 255, 0.10)
+    font-weight: 600
+  td, th
+    padding: 10px 12px
+    border-bottom: 1px solid rgba(116, 198, 255, 0.1)
+    text-align: left
+  img
+    max-width: 100%
+    height: auto
+    border-radius: 12px
 
 .guide-page-kicker,
 .guide-posts-heading span
   color: #74f7d1
-  font: 700 11px "Source Code Pro", Consolas, monospace
+  font: 700 11px font-mono
   letter-spacing: 0.2em
 
 .guide-page-header h1
@@ -1055,7 +1155,7 @@ body
   time
     flex: 0 0 auto
     color: #74f7d1
-    font: 12px "Source Code Pro", Consolas, monospace
+    font: 12px font-mono
 
 .guide-empty
   color: #9fb3d2
@@ -1094,7 +1194,7 @@ body
 
 .mission-index
   color: #74f7d1
-  font: 700 12px "Source Code Pro", Consolas, monospace
+  font: 700 12px font-mono
   letter-spacing: 0.2em
 
 .latest-transmissions
@@ -1102,7 +1202,7 @@ body
     margin: 0 0 18px
     span
       color: #74f7d1
-      font: 700 11px "Source Code Pro", Consolas, monospace
+      font: 700 11px font-mono
       letter-spacing: 0.22em
       text-transform: uppercase
     h2
@@ -1137,7 +1237,7 @@ body
 
 .sidebar-command-kicker
   color: #74f7d1
-  font: 700 10px "Source Code Pro", Consolas, monospace
+  font: 700 10px font-mono
   letter-spacing: 0.22em
 
 .widget-wrap

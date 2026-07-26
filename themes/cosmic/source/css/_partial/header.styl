@@ -90,6 +90,14 @@ $nav-link
   position: relative
   cursor: pointer
 
+// #main-nav-toggle 与 .nav-search-btn 已从 <a> 改为 <button>：
+// 重置 UA 按钮外观；content-box 保持与原 <a> 相同的盒模型尺寸
+button.nav-icon
+  appearance: none
+  box-sizing: content-box
+  border: 0
+  background: transparent
+
 .main-nav-link
   @extend $nav-link
   font-weight: 300
@@ -167,7 +175,3 @@ $nav-link
   transition: color 0.25s ease
   &:hover
     color: #8eb6ff
-  color: #bbb
-  cursor: pointer
-  &:hover, &:focus
-    color: #777

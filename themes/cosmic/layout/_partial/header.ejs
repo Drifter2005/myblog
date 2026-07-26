@@ -9,9 +9,10 @@
         <a href="<%- url_for() %>" id="logo"><%= config.title %></a>
       </h1>
       <% if (theme.subtitle || config.subtitle){ %>
-        <h2 id="subtitle-wrap">
+        <%# 副标题不是标题层级，用 p 承载 %>
+        <p id="subtitle-wrap">
           <a href="<%- url_for() %>" id="subtitle"><%= theme.subtitle || config.subtitle %></a>
-        </h2>
+        </p>
       <% } %>
       <div class="hero-metrics" aria-label="research focus">
         <span>Graph Theory</span>

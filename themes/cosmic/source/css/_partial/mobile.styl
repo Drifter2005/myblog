@@ -1,3 +1,14 @@
+// 默认隐藏抽屉：visibility 会把里面的链接从 Tab 序里移除
+// （桌面视口下抽屉在 #wrap 底下仍可被键盘聚焦的 bug）。
+// 关闭时延迟 0.2s 再隐藏，与 #wrap 滑动动画同步。
+#mobile-nav
+  visibility: hidden
+  transition: visibility 0s 0.2s
+
+.mobile-nav-on #mobile-nav
+  visibility: visible
+  transition-delay: 0s
+
 @media mq-mobile
   #mobile-nav
     position: absolute
@@ -6,7 +17,7 @@
     width: mobile-nav-width
     height: 100%
     background: color-mobile-nav-background
-    border-right: 1px solid #fff
+    border-right: 1px solid color-border
 
 @media mq-mobile
   .mobile-nav-link

@@ -17,9 +17,10 @@
         </div>
         <% if (post.link || post.title){ %>
           <header class="article-header">
-            <h1 class="p-name article-title">
+            <%# 列表页文章标题用 h2：页面唯一的 h1 留给站点/页面主标题 %>
+            <h2 class="p-name article-title">
               <a href="<%- url_for(post.path) %>"><%= post.title %></a>
-            </h1>
+            </h2>
           </header>
         <% } %>
         <div class="article-entry article-preview">

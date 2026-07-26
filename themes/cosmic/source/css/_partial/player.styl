@@ -9,11 +9,19 @@
   width: 100%
   height: auto
 
-.aplayer
+// 可见的播放条其实是 .aplayer-fixed .aplayer-body（APlayer 自己的
+// position:fixed 白底元素）。深色渐变必须打在它身上，
+// 打在底下的 .aplayer 根上只会被白条盖住。
+.aplayer.aplayer-fixed .aplayer-body
   background: linear-gradient(135deg, rgba(7, 18, 36, 0.95), rgba(4, 9, 21, 0.92)) !important
   border-top: 1px solid rgba(116, 247, 209, 0.28) !important
   box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.48) !important
   backdrop-filter: blur(20px) !important
+
+.aplayer
+  background: transparent !important
+  border: none !important
+  box-shadow: none !important
 
   .aplayer-info
     background: transparent !important
@@ -109,6 +117,17 @@
 
     .aplayer-controller
       min-width: 100px !important
+
+// ====== 播放器占位 ======
+// 固定在底部的播放条会盖住页面末尾内容，给 body 留出等高空间；
+// 播放器收起时（body.player-hidden）收回。
+
+body
+  padding-bottom: 84px
+  transition: padding-bottom 0.3s ease
+
+body.player-hidden
+  padding-bottom: 0
 
 // ====== 播放动画 ======
 
