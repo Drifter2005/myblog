@@ -24,15 +24,15 @@
 <%- js('https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js') %>
 
 <% if (theme.fancybox){ %>
-  <%- js('fancybox/jquery.fancybox.min.js', {defer: true}) %>
+  <% /* js() 助手不接受选项对象（会渲染成第二个 404 资源），手写标签 */ %>
+  <script defer src="<%= url_for('fancybox/jquery.fancybox.min.js') %>"></script>
 <% } %>
 
-<% /* asset_version 每次构建变化一次，用于让部署后的浏览器丢弃旧脚本缓存 */ %>
-<% var assetVer = asset_version(); %>
-<script src="<%= url_for('js/script.js') %>?v=<%= assetVer %>"></script>
-<script src="<%= url_for('js/music-player.js') %>?v=<%= assetVer %>"></script>
-<script src="<%= url_for('js/cosmic.js') %>?v=<%= assetVer %>"></script>
-<script src="<%= url_for('js/pjax.js') %>?v=<%= assetVer %>"></script>
+<% /* asset_version(path) 按文件内容哈希 —— 只有真正改过的文件才换 URL */ %>
+<script src="<%= url_for('js/script.js') %>?v=<%= asset_version('js/script.js') %>"></script>
+<script src="<%= url_for('js/music-player.js') %>?v=<%= asset_version('js/music-player.js') %>"></script>
+<script src="<%= url_for('js/cosmic.js') %>?v=<%= asset_version('js/cosmic.js') %>"></script>
+<script src="<%= url_for('js/pjax.js') %>?v=<%= asset_version('js/pjax.js') %>"></script>
 <%- partial('gauges-analytics') %>
 
 <% /* Waline：serverURL 未配置时完全不加载，站点照常工作 */ %>
@@ -49,5 +49,5 @@
     pageview: <%- JSON.stringify(theme.waline.pageview !== false) %>
   };
 </script>
-<script type="module" src="<%= url_for('js/waline-init.js') %>?v=<%= assetVer %>"></script>
+<script type="module" src="<%= url_for('js/waline-init.js') %>?v=<%= asset_version('js/waline-init.js') %>"></script>
 <% } %>

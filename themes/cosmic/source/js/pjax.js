@@ -12,7 +12,20 @@
   // 用类选择器会误抓到 header。
   var CONTAINER = '#content-outer';
   var cache = Object.create(null);
+  var cacheOrder = [];
+  var CACHE_LIMIT = 12;
   var currentRequest = 0;
+
+  function cachePut(url, html) {
+    if (!(url in cache)) {
+      cacheOrder.push(url);
+      // 超出上限时淘汰最早的一条，避免长时间浏览后无界增长
+      while (cacheOrder.length > CACHE_LIMIT) {
+        delete cache[cacheOrder.shift()];
+      }
+    }
+    cache[url] = html;
+  }
 
   function container() {
     return document.querySelector(CONTAINER);
@@ -51,6 +64,23 @@
     }
 
     return true;
+  }
+
+  /* ---------- 屏幕阅读器播报 ---------- */
+
+  var liveRegion = null;
+
+  function announce(text) {
+    if (!liveRegion) {
+      liveRegion = document.createElement('div');
+      liveRegion.setAttribute('aria-live', 'polite');
+      liveRegion.setAttribute('aria-atomic', 'true');
+      liveRegion.className = 'sr-only';
+      document.body.appendChild(liveRegion);
+    }
+    liveRegion.textContent = '';
+    // 先清空再写入，确保相同标题也会被重新播报
+    requestAnimationFrame(function () { liveRegion.textContent = text; });
   }
 
   /* ---------- 进度条 ---------- */
@@ -111,12 +141,18 @@
     // 重新绑定内容区里的交互（这些模块各自暴露了 refresh 钩子）
     if (typeof window.CosmicRefresh === 'function') window.CosmicRefresh();
 
-    // fancybox（若启用）
-    if (window.jQuery && typeof window.jQuery.fn.fancybox === 'function') {
+    // 图片图注与 fancybox 包裹：script.js 里那段是一次性遍历，
+    // 换入的新文章必须重跑一次，否则图片失去灯箱和图注。
+    if (typeof window.EnhanceArticleImages === 'function') {
       try {
-        window.jQuery('.article-entry').find('img').parent('a').fancybox();
+        window.EnhanceArticleImages();
       } catch (e) { /* 忽略 */ }
     }
+
+    // 上一页遗留的分享气泡是 append 到 body 的，不在替换范围内，手动清掉
+    document.querySelectorAll('.article-share-box').forEach(function (box) {
+      box.remove();
+    });
 
     updateNavActive();
     // Waline 的重新挂载由 waline-init.js 监听 pjax:done 自行处理，
@@ -149,8 +185,26 @@
 
       if (push) window.history.pushState({ pjax: true }, '', url);
 
-      window.scrollTo({ top: 0, behavior: 'auto' });
+      // 有锚点则滚到锚点；前进/后退（push=false）交给浏览器恢复滚动位置
+      var hash = '';
+      try { hash = new URL(url, window.location.href).hash; } catch (e) { /* 忽略 */ }
+      if (hash) {
+        var anchor = document.querySelector(hash);
+        if (anchor) anchor.scrollIntoView();
+        else window.scrollTo({ top: 0, behavior: 'auto' });
+      } else if (push) {
+        window.scrollTo({ top: 0, behavior: 'auto' });
+      }
+
       refreshDynamic();
+
+      // 焦点管理：把焦点移到内容区，让键盘和屏幕阅读器用户感知页面已切换
+      var main = container();
+      if (main) {
+        main.setAttribute('tabindex', '-1');
+        main.focus({ preventScroll: true });
+      }
+      announce(document.title);
 
       document.body.classList.remove('pjax-loading');
       barDone();
@@ -171,7 +225,7 @@
         return res.text();
       })
       .then(function (html) {
-        cache[url] = html;
+        cachePut(url, html);
         done(html);
       })
       .catch(function () {
@@ -197,8 +251,13 @@
       return;
     }
 
-    // 移动端导航打开时，点击后先收起
-    document.body.classList.remove('mobile-nav-on');
+    // 离开前把当前滚动位置记进历史项，后退时恢复
+    window.history.replaceState({ pjax: true, scroll: window.scrollY }, '', window.location.href);
+
+    // 移动端导航打开时，点击后先收起。
+    // 注意 class 是 script.js 加在 #container 上的，不是 body。
+    var containerEl = document.getElementById('container');
+    if (containerEl) containerEl.classList.remove('mobile-nav-on');
 
     load(url.href, true);
   });
@@ -208,7 +267,13 @@
       // 不是 PJAX 产生的历史项（例如初始进入），交给浏览器
       return;
     }
+    var savedScroll = typeof event.state.scroll === 'number' ? event.state.scroll : 0;
     load(window.location.href, false);
+    // 内容落地后恢复后退前的滚动位置
+    window.addEventListener('pjax:done', function once() {
+      window.removeEventListener('pjax:done', once);
+      window.scrollTo({ top: savedScroll, behavior: 'auto' });
+    });
   });
 
   // 让初始页面也带上 pjax 标记，前进/后退才能被正确接管

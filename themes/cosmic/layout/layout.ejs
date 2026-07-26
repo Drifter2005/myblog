@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="<%= config.language || 'zh-CN' %>">
 <%- partial('_partial/head') %>
 <body class="page-layout-<%= page.layout || 'default' %>">
+  <a class="skip-link" href="#content-outer">跳到正文</a>
   <canvas id="starfield" aria-hidden="true"></canvas>
   <div class="cursor-halo" aria-hidden="true"></div>
   <div class="cosmic-background" aria-hidden="true">

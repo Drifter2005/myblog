@@ -4,14 +4,27 @@ on:
   push:
     branches:
       - main
+    # Qexo 保存草稿也会 push；草稿不参与渲染（render_drafts: false），
+    # 跳过这些 push 以减少无意义的构建
+    paths-ignore:
+      - 'source/_drafts/**'
   workflow_dispatch:
 
 permissions:
   contents: read
 
+# Qexo 点一次「发布」会在数秒内连推 3 个 commit（实测），并发的 run
+# 之间没有顺序保证，后完成的旧 run 会把线上回滚到旧版本。
+# 串行化：同组 run 排队执行；不取消进行中的（避免 push 中途被打断），
+# 排队中的旧 run 会被更新的顶掉，最终态始终是最新 commit。
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: Checkout source

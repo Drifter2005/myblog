@@ -65,12 +65,19 @@
       }
 
       if (!animate) {
-        // 下一帧再解除禁用，确保首次渲染没有闪烁的滑动动画
+        // 下一帧再解除禁用，确保首次渲染没有闪烁的滑动动画。
+        // 后台标签页里 rAF 会被暂停，用 setTimeout 兜底，
+        // 否则这个 class 会一直留着、把过渡永久关掉。
+        var released = false;
+        var release = function () {
+          if (released) return;
+          released = true;
+          document.body.classList.remove('player-no-anim');
+        };
         requestAnimationFrame(function () {
-          requestAnimationFrame(function () {
-            document.body.classList.remove('player-no-anim');
-          });
+          requestAnimationFrame(release);
         });
+        setTimeout(release, 400);
       }
     },
 
@@ -116,13 +123,16 @@
   /* ---------- 初始化 ---------- */
 
   var booted = false;
+  var initAttempts = 0;
+  var MAX_INIT_ATTEMPTS = 50; // 约 6 秒；APlayer CDN 挂掉时放弃而不是永久轮询
 
   function init() {
     if (booted) return; // 防止重复初始化（PJAX 场景）
 
     var container = document.getElementById('music-player-host');
     if (!container || typeof window.APlayer === 'undefined') {
-      setTimeout(init, 120);
+      if (++initAttempts < MAX_INIT_ATTEMPTS) setTimeout(init, 120);
+      else console.warn('[player] APlayer 未能加载，跳过播放器初始化');
       return;
     }
     booted = true;

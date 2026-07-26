@@ -20,14 +20,21 @@
 
     startSearchAnim();
     $searchWrap.addClass('on');
+    $(this).attr('aria-expanded', 'true');
     stopSearchAnim(function(){
       $('.search-form-input').focus();
     });
   });
 
-  $('.search-form-input').on('blur', function(){
+  // 用 focusout + relatedTarget 判断焦点是否真的离开了整个表单，
+  // 避免 Tab 从输入框移到提交按钮的瞬间表单被收起。
+  $('.search-form').on('focusout', function(event){
+    var next = event.relatedTarget;
+    if (next && $.contains(this, next)) return;
+
     startSearchAnim();
     $searchWrap.removeClass('on');
+    $('.nav-search-btn').attr('aria-expanded', 'false');
     stopSearchAnim();
   });
 
@@ -86,26 +93,41 @@
     window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
   });
 
-  // Caption
-  $('.article-entry').each(function(i){
-    $(this).find('img').each(function(){
-      if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+  // Caption + fancybox
+  // 抽成可重入函数：PJAX 换入的新内容需要重新处理，否则新文章里的图片
+  // 拿不到 <a> 包裹，灯箱和图注都会失效。
+  var enhanceArticleImages = function(){
+    $('.article-entry').each(function(i){
+      var $entry = $(this);
 
-      var alt = this.alt;
+      // 已处理过的容器直接跳过，避免重复包裹和重复插入图注
+      if ($entry.data('imagesEnhanced')) return;
+      $entry.data('imagesEnhanced', true);
 
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $entry.find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
 
-      $(this).wrap('<a href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+        var alt = this.alt;
+
+        if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+
+        $(this).wrap('<a href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+
+      $entry.find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
     });
 
-    $(this).find('.fancybox').each(function(){
-      $(this).attr('rel', 'article' + i);
-    });
-  });
+    if ($.fancybox){
+      $('.fancybox').fancybox();
+    }
+  };
 
-  if ($.fancybox){
-    $('.fancybox').fancybox();
-  }
+  enhanceArticleImages();
+
+  // 供 pjax.js 在换页后调用
+  window.EnhanceArticleImages = enhanceArticleImages;
 
   // Mobile nav
   var $container = $('#container'),
@@ -127,6 +149,7 @@
 
     startMobileNavAnim();
     $container.toggleClass('mobile-nav-on');
+    $(this).attr('aria-expanded', $container.hasClass('mobile-nav-on') ? 'true' : 'false');
     stopMobileNavAnim();
   });
 

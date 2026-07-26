@@ -21,25 +21,30 @@
       </div>
     </div>
     <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+      <nav id="main-nav" aria-label="主导航">
+        <button id="main-nav-toggle" class="nav-icon" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mobile-nav"><span class="fa fa-bars" aria-hidden="true"></span></button>
         <% for (var i in theme.menu){ %>
           <a class="main-nav-link" href="<%- url_for(theme.menu[i]) %>"><%= i %></a>
         <% } %>
       </nav>
-      <nav id="sub-nav">
+      <nav id="sub-nav" aria-label="外部链接与搜索">
         <% if (theme.links) { %>
           <% for (const i in theme.links) {%>
-            <a class="nav-icon" href="<%- url_for(theme.links[i]) %>"><span class="fa fa-<%= i %>"></span></a>
+            <a class="nav-icon" href="<%- url_for(theme.links[i]) %>" aria-label="<%= i %>"><span class="fa fa-<%= i %>" aria-hidden="true"></span></a>
           <% } %>
         <% } %>
         <% if (theme.rss){ %>
-          <a class="nav-icon" href="<%- url_for(theme.rss) %>" title="<%= __('rss_feed') %>"><span class="fa fa-rss"></span></a>
+          <a class="nav-icon" href="<%- url_for(theme.rss) %>" title="<%= __('rss_feed') %>"><span class="fa fa-rss" aria-hidden="true"></span></a>
         <% } %>
-        <a class="nav-icon nav-search-btn" title="<%= __('search') %>"><span class="fa fa-search"></span></a>
+        <button class="nav-icon nav-search-btn" type="button" aria-label="<%= __('search') %>" aria-expanded="false"><span class="fa fa-search" aria-hidden="true"></span></button>
       </nav>
       <div id="search-form-wrap">
-        <%- search_form({button: '&#xF002;', text: __('search')}) %>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form" role="search">
+          <label class="sr-only" for="site-search-input"><%= __('search') %></label>
+          <input type="search" id="site-search-input" name="q" class="search-form-input" placeholder="<%= __('search') %>">
+          <button type="submit" class="search-form-submit" aria-label="<%= __('search') %>"><span class="fa fa-search" aria-hidden="true"></span></button>
+          <input type="hidden" name="sitesearch" value="<%= config.url %>">
+        </form>
       </div>
     </div>
   </div>

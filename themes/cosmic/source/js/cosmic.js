@@ -20,24 +20,36 @@
     return Math.max(min, Math.min(max, value));
   }
 
-  function updateMouseVars(x, y) {
-    var px = ((x / window.innerWidth) - 0.5) * 18;
-    var py = ((y / window.innerHeight) - 0.5) * 18;
-    root.style.setProperty('--cosmic-mouse-x', x + 'px');
-    root.style.setProperty('--cosmic-mouse-y', y + 'px');
-    root.style.setProperty('--cosmic-parallax-x', px.toFixed(2) + 'px');
-    root.style.setProperty('--cosmic-parallax-y', py.toFixed(2) + 'px');
+  // 直接改目标元素的 transform，而不是往 :root 写自定义属性 ——
+  // 后者每次都触发全文档样式失效（实测 ~3ms/次），前者只走合成器。
+  var halo = document.querySelector('.cursor-halo');
+  var bgLayer = document.querySelector('.cosmic-background');
+  var mouseRaf = null;
+
+  function applyMouseVars() {
+    mouseRaf = null;
+    if (halo) {
+      halo.style.transform = 'translate3d(' + mouse.x + 'px,' + mouse.y + 'px,0)';
+    }
+    if (bgLayer) {
+      var px = ((mouse.x / window.innerWidth) - 0.5) * 18;
+      var py = ((mouse.y / window.innerHeight) - 0.5) * 18;
+      bgLayer.style.transform = 'translate3d(' + px.toFixed(2) + 'px,' + py.toFixed(2) + 'px,0)';
+    }
+  }
+
+  function updateMouseVars() {
+    if (!mouseRaf) mouseRaf = requestAnimationFrame(applyMouseVars);
   }
 
   window.addEventListener('pointermove', function (event) {
-    if (mouseThrottle++ % 2 !== 0) return;
     mouse.x = event.clientX;
     mouse.y = event.clientY;
     if (!mouse.active) {
       mouse.active = true;
       body.classList.add('cosmic-pointer-active');
     }
-    updateMouseVars(mouse.x, mouse.y);
+    updateMouseVars();
   }, { passive: true });
 
   window.addEventListener('pointerleave', function () {
@@ -74,11 +86,15 @@
 
   function drawStars(time) {
     if (!ctx || reducedMotion) return;
-    var now = performance.now();
-    var delta = now - lastFrameTime;
-    lastFrameTime = now;
 
-    if (delta < 16) return;
+    // 高刷屏限帧到 ~60fps。早退分支必须重新排队，
+    // 否则第一帧 delta < 16ms 时整个动画循环就永久停死。
+    var now = performance.now();
+    if (now - lastFrameTime < 16) {
+      requestAnimationFrame(drawStars);
+      return;
+    }
+    lastFrameTime = now;
 
     ctx.clearRect(0, 0, width, height);
     var gravityX = (mouse.x - width / 2) / width;

@@ -414,10 +414,12 @@ body
   opacity: 0.9
   mix-blend-mode: screen
 
+// 定位由 JS 直接写 transform（走合成器，不触发样式失效），
+// margin 负值负责把圆心对到光标上。
 .cursor-halo
   position: fixed
-  left: var(--cosmic-mouse-x)
-  top: var(--cosmic-mouse-y)
+  left: 0
+  top: 0
   width: 400px
   height: 400px
   margin-left: -200px
@@ -428,16 +430,14 @@ body
   background: radial-gradient(circle, rgba(116,247,209,0.16), rgba(142,182,255,0.07) 38%, transparent 68%)
   filter: blur(10px)
   opacity: 0
-  transform: scale(0.80)
-  transition: opacity 0.32s ease, transform 0.32s ease
+  transition: opacity 0.32s ease
   will-change: opacity, transform
 
 body.cosmic-pointer-active .cursor-halo
   opacity: 0.9
-  transform: scale(1)
 
+// transform 由 JS 直接写入（视差跟随），CSS 只保留过渡
 .cosmic-background
-  transform: translate3d(var(--cosmic-parallax-x), var(--cosmic-parallax-y), 0)
   transition: transform 0.14s ease-out
 
 .cosmic-orbit
@@ -676,9 +676,10 @@ body.cosmic-ready
 // === Dynamic cosmic layer end ===
 
 // === Portal guide and sidebar upgrade start ===
+// 鼠标跟随光效已由 .cursor-halo（合成器层）承担，
+// body 背景不再引用鼠标变量 —— 那会随 pointermove 反复重绘整页背景。
 body
   background:
-    radial-gradient(circle at var(--cosmic-mouse-x, 50vw) var(--cosmic-mouse-y, 50vh), rgba(116, 247, 209, 0.18), transparent 18rem),
     radial-gradient(circle at 10% 8%, rgba(67, 103, 255, 0.34), transparent 24rem),
     radial-gradient(circle at 88% 20%, rgba(0, 255, 194, 0.18), transparent 20rem),
     radial-gradient(circle at 56% 86%, rgba(255, 177, 92, 0.13), transparent 24rem),

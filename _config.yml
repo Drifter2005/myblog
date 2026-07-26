@@ -98,16 +98,24 @@ ignore:
 ## Themes: https://hexo.io/themes/
 theme: cosmic
 
+# RSS/Atom feed（hexo-generator-feed）
+feed:
+  enable: true
+  type: atom
+  path: atom.xml
+  limit: 20
+  content: false
+
+# 站点地图（hexo-generator-sitemap）
+sitemap:
+  path: sitemap.xml
+
 # Deployment
-## Docs: https://hexo.io/docs/one-command-deployment
 #
-# ⚠️ 正常发布流程不需要用这里 —— 推送本仓库 main 后由
-#    .github/workflows/deploy.yml 自动构建并发布，那才是唯一权威路径。
+# 本仓库不配置本地 deploy。唯一发布路径：推送 main → GitHub Actions
+# (.github/workflows/deploy.yml) 构建并发布到 Drifter2005.github.io。
 #
-# ⚠️ repo 必须始终是 Drifter2005.github.io（Pages 仓库）。
-#    绝对不要改成本仓库 myblog：hexo-deployer-git 是强制推送构建产物的，
-#    指向源码仓库会把 source/ 和 themes/ 整个覆盖掉。（2026-07-26 曾因此丢过一次源码）
-deploy:
-  type: git
-  repo: https://github.com/Drifter2005/Drifter2005.github.io.git
-  branch: main
+# 为什么删掉了 deploy 段：hexo-deployer-git 维护一套独立的本地历史并
+# force-push，与 CI 发布互不可见 —— 本地随手 deploy 会静默覆盖 CI 刚
+# 发布的新文章（且没有任何报错）。2026-07-26 它还曾把构建产物强推到
+# 源码仓库、覆盖过一次 source/。不要把它加回来。

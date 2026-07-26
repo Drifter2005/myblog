@@ -17,43 +17,50 @@
   } else if (is_tag()){
     title = __('tag') + ': ' + page.tag;
   }
+
+  // 页面级描述：文章用摘要，否则回退到站点描述。
+  // 唯一的 <meta name="description"> 由 open_graph() 输出（传 description 参数），
+  // 不要再手写一条，否则会双重输出。
+  var metaDesc = config.description || '';
+  if (page.excerpt) {
+    metaDesc = strip_html(page.excerpt);
+  } else if (page.content && is_post()) {
+    metaDesc = strip_html(page.content);
+  }
+  metaDesc = metaDesc.replace(/^[#\s]+/, '').replace(/\s+/g, ' ').trim().substring(0, 160);
+
+  // 规范 URL：与站内链接一致的目录式地址（不带 index.html）
+  var canonicalUrl = page.permalink || (config.url + url_for(page.path || '/'));
+  canonicalUrl = canonicalUrl.replace(/index\.html$/, '');
   %>
   <title><% if (title){ %><%= title %> | <% } %><%= config.title %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5, user-scalable=yes">
   <meta name="theme-color" content="#04050d">
   <meta name="color-scheme" content="dark">
-  <meta name="description" content="<%= config.description || '算法、CTF 与安全研究日志' %>">
-  <meta name="generator" content="Hexo">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="canonical" href="<%= canonicalUrl %>">
   <meta name="format-detection" content="telephone=no">
-  <%- open_graph({twitter_id: theme.twitter, fb_admins: theme.fb_admins, fb_app_id: theme.fb_app_id}) %>
-  <% if (config.feed) { %>
-    <%- feed_tag() %>
-  <% } else if (theme.rss) { %>
-    <%- feed_tag(theme.rss) %>
+  <%- open_graph({twitter_id: theme.twitter, fb_admins: theme.fb_admins, fb_app_id: theme.fb_app_id, description: metaDesc, url: canonicalUrl}) %>
+  <% if (config.feed && config.feed.path) { %>
+    <link rel="alternate" href="<%- url_for(config.feed.path) %>" title="<%= config.title %>" type="application/atom+xml">
   <% } %>
   <% if (theme.favicon){ %>
     <%- favicon_tag(theme.favicon) %>
   <% } %>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-  <% if (config.highlight.enable){ %>
-    <%- css('https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css', {async: true}) %>
-  <% } %>
-  <!-- APlayer 音乐播放器 -->
-  <%- css('https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css') %>
+  <%
+  // 注意：Hexo 的 css()/js() 助手不接受 {async:true} 这类选项对象 ——
+  // 它会被当成「第二个资源路径」，渲染出指向 /[object Object].css 的 404 请求。
+  // 需要属性的标签一律手写。
+  %>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
   <% if (theme.waline && theme.waline.serverURL){ %>
     <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css">
   <% } %>
-  <link rel="stylesheet" href="<%= url_for('css/style.css') %>?v=<%= asset_version() %>">
+  <link rel="stylesheet" href="<%= url_for('css/style.css') %>?v=<%= asset_version('css/style.css') %>">
   <% if (theme.fancybox){ %>
-    <%- css('fancybox/jquery.fancybox.min.css', {async: true}) %>
+    <link rel="stylesheet" href="<%= url_for('fancybox/jquery.fancybox.min.css') %>">
   <% } %>
-  <%- css('https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css', {async: true}) %>
-  <style>
-    html { scroll-padding-top: 80px; }
-    body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
 </head>
