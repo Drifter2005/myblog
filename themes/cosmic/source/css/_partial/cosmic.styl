@@ -3,14 +3,8 @@ html
   scroll-behavior: smooth
   scroll-padding-top: 80px
 
-// 灰阶层级（可排序，1.8×/1.6× 步长）：
-//   标题 #eef4fb ≈15:1 ｜ 正文 #b7c5da ≈8.4:1 ｜ 次要 #8fa3c0 ≈5.2:1
-:root
-  // 正文行长：34em = 34 汉字 ≈ 68 拉丁，作者可调 36em / 38em
-  --measure: 34em
-
 body
-  color: #b7c5da
+  color: #c9d7ea
   background:
     radial-gradient(circle at 18% 12%, rgba(75, 124, 255, 0.22), transparent 32%),
     radial-gradient(circle at 84% 18%, rgba(116, 247, 209, 0.14), transparent 26%),
@@ -146,7 +140,7 @@ body
   box-shadow: 0 0 24px rgba(116, 247, 209, 0.12)
 
 #logo
-  color: #eef4fb
+  color: #f4fbff
   font-size: clamp(30px, 5vw, 44px)
   // header.styl 的 line-height 按 40px 字号写死，这里字号放大后必须同步，
   // 否则标题换行时字形重叠。
@@ -174,7 +168,7 @@ body
     padding: 7px 12px
     border: 1px solid rgba(116, 198, 255, 0.22)
     border-radius: 6px
-    color: #b7c5da
+    color: #c9d7ea
     background: rgba(4, 11, 23, 0.56)
     font-family: font-mono
     font-size: 12px
@@ -232,7 +226,7 @@ body
   letter-spacing: 0.16em
 
 .article-title
-  color: #eef4fb
+  color: #edf6ff
   font-size: 2.18em
   letter-spacing: 0.01em
   font-weight: 600
@@ -243,56 +237,35 @@ body
     text-shadow: 0 0 20px rgba(116, 247, 209, 0.38)
 
 .article-entry
-  color: #b7c5da
+  color: #c9d7ea
   font-size: 16px
   line-height: 1.88
   word-break: break-word
-  // 中文严格断行：避头尾字符不落行首/行尾
-  line-break: strict
   h1, h2, h3, h4, h5, h6
-    color: #eef4fb
+    color: #f4fbff
     margin-top: 1.6em
     margin-bottom: 0.8em
     font-weight: 600
   h1
     font-size: 1.8em
   h2
-    border-left: 2px solid rgba(116, 247, 209, 0.55)
+    border-left: 3px solid #74f7d1
     padding-left: 16px
-    font-size: 1.5em
+    font-size: 1.6em
   h3
-    font-size: 1.25em
-  // 段距 24px < 行距 ~30px：段落才能成组（article.styl 的 1.65em 上下距被覆盖）
-  p
-    margin: 0 0 24px
-    line-height: inherit
-  ul, ol
-    margin: 0 0 24px
-    padding-left: 1.7em
-  ul ul, ol ol, ul ol, ol ul
-    margin: 0.3em 0
-  dl
-    margin: 0 0 24px
-  // 链接：与正文同色系 + 常态下划线（WCAG 1.4.1 的非颜色区分，不可改成纯色）
+    font-size: 1.35em
   a
-    color: #b7e3d4
-    text-decoration: underline
-    text-decoration-thickness: 1px
-    text-underline-offset: 0.22em
-    // under + 关掉 skip-ink：下划线避开中文横画，且不在「口/日/四」上打断口
-    text-underline-position: under
-    text-decoration-skip-ink: none
-    transition: color 0.2s ease
+    color: #74f7d1
+    text-decoration: none
+    transition: color 0.2s ease, text-shadow 0.2s ease
     &:hover
-      color: #74f7d1
-      text-decoration-thickness: 2px
-  // 中文强调走亮度（无 roman/italic 形态轴，YaHei 无 500 时落回 400，仍有亮度差）
+      text-decoration: underline
+      text-shadow: 0 0 12px rgba(116, 247, 209, 0.24)
   strong
-    color: #eef4fb
-    font-weight: 500
+    color: #f6d99d
+    font-weight: 600
   em
-    font-style: normal
-    color: #8fa3c0
+    color: #b8c9e6
   blockquote
     border-left: 3px solid #8eb6ff
     margin: 28px 0
@@ -301,8 +274,7 @@ body
     background: rgba(142, 182, 255, 0.06)
     border-radius: 0 10px 10px 0
     color: #b8c9e6
-    // 中文没有斜体传统，合成斜体难看
-    font-style: normal
+    font-style: italic
   code
     color: #74f7d1
     background: rgba(116, 247, 209, 0.08)
@@ -317,7 +289,7 @@ body
     width: 100%
     table-layout: auto
   th
-    color: #eef4fb
+    color: #f4fbff
     background: linear-gradient(135deg, rgba(116, 198, 255, 0.12), rgba(142, 182, 255, 0.08))
     font-weight: 600
   td, th
@@ -363,7 +335,7 @@ body
     border-color: rgba(116, 247, 209, 0.24)
 
 .widget-title
-  color: #eef4fb
+  color: #f4fbff
   border-bottom: 1px solid rgba(116, 247, 209, 0.18)
   font-family: font-mono
   // 标题主文案是中文（归档/分类/…）：字距归零；内部拉丁角标 span 单独保留字距
@@ -656,7 +628,7 @@ body
 
 .portal-panel h1
   margin: 0
-  color: #eef4fb
+  color: #f7fbff
   font-size: clamp(34px, 5vw, 66px)
   line-height: 1.12
   // 中文大标题：字距归零
@@ -666,7 +638,7 @@ body
 .portal-copy
   max-width: 690px
   margin: 20px 0 0
-  color: #b7c5da
+  color: #c9d7ea
   font-size: 17px
   line-height: 1.9
 
@@ -793,7 +765,7 @@ body
   strong, small
     display: block
   strong
-    color: #eef4fb
+    color: #f7fbff
     font-size: 22px
   small
     margin-top: 9px
@@ -811,7 +783,7 @@ body
 
 .guide-card-body
   padding: 0 22px 22px 54px
-  color: #b7c5da
+  color: #c9d7ea
   line-height: 1.75
   border-top: 1px solid rgba(116,198,255,0.12)
   p
@@ -868,38 +840,18 @@ body
   .article-title
     font-size: 2.28em
     line-height: 1.22
-  // 34em 受限行长：grid 三列居中（--measure 可调）。
-  // 三个必须项：min-width:0（防长代码行撑破整列）、
-  // :before/:after content:none（干掉 nib clearfix() 注入的空 grid item）、
-  // unquote()（Stylus 内置 min() 会静默吃掉 CSS min()）。
   .article-entry
-    display: grid
-    grid-template-columns: unquote("1fr min(var(--measure, 34em), 100%) 1fr")
     padding: 0 44px 36px
+    max-width: 940px
+    margin: 0 auto
     font-size: 18px
     line-height: 1.9
     word-break: break-word
-    > *
-      grid-column: 2
-      min-width: 0
-    &:before,
-    &:after
-      content: none
-    // 代码块与表格越界到宽列
-    // box-sizing 必须显式 border-box：主题无全局 border-box，
-    // 否则 width:100% + 代码块自身 padding 会溢出 grid 区域
-    > .highlight,
-    > pre,
-    > table
-      grid-column: 1 / -1
-      width: 100%
-      max-width: unquote("min(52em, 100%)")
-      justify-self: center
-      box-sizing: border-box
   .article-entry pre,
   .article-entry .highlight
     margin-left: 0
     margin-right: 0
+    max-width: 100%
     overflow-x: auto
   .article-entry .highlight table
     table-layout: auto
@@ -938,16 +890,14 @@ body
 // 栏目页正文（layout: guide 的 page.content）：global-reset 后所有内容
 // 元素都是裸样式，这里补一套与 .article-entry 一致的内容排版。
 .guide-page-copy
-  color: #b7c5da
+  color: #c9d7ea
   font-size: 16px
   line-height: 1.85
   word-break: break-word
-  line-break: strict
-  // 段距 24px < 行距 ~30px：段落成组
   p
-    margin: 0 0 24px
+    margin: 1.1em 0
   ul, ol
-    margin: 0 0 24px
+    margin: 1.1em 0
     padding-left: 1.7em
   ul
     list-style: disc
@@ -958,32 +908,24 @@ body
     margin-bottom: 0.3em
   li
     margin: 0.4em 0
-  // 与 .article-entry 一致：同色系 + 常态下划线（WCAG 1.4.1，不可改成纯颜色区分）
   a
-    color: #b7e3d4
-    text-decoration: underline
-    text-decoration-thickness: 1px
-    text-underline-offset: 0.22em
-    text-underline-position: under
-    text-decoration-skip-ink: none
-    transition: color 0.2s ease
+    color: #74f7d1
+    text-decoration: none
     &:hover
-      color: #74f7d1
-      text-decoration-thickness: 2px
-  // 中文强调走亮度
+      text-decoration: underline
   strong
-    color: #eef4fb
-    font-weight: 500
+    color: #f6d99d
+    font-weight: 600
   em
-    color: #8fa3c0
-    font-style: normal
+    color: #b8c9e6
+    font-style: italic
   h2, h3, h4
-    color: #eef4fb
+    color: #f4fbff
     margin: 1.6em 0 0.7em
     font-weight: 600
   h2
     font-size: 1.5em
-    border-left: 2px solid rgba(116, 247, 209, 0.55)
+    border-left: 3px solid #74f7d1
     padding-left: 14px
   h3
     font-size: 1.25em
@@ -1047,7 +989,7 @@ body
     overflow: hidden
     border-collapse: collapse
   th
-    color: #eef4fb
+    color: #f4fbff
     background: rgba(116, 198, 255, 0.10)
     font-weight: 600
   td, th
@@ -1067,7 +1009,7 @@ body
 
 .guide-page-header h1
   margin: 10px 0 20px
-  color: #eef4fb
+  color: #f7fbff
   font-size: 42px
 
 .guide-posts
@@ -1075,7 +1017,7 @@ body
 
 .guide-posts-heading h2
   margin: 8px 0 20px
-  color: #eef4fb
+  color: #f7fbff
 
 .guide-post-list
   display: grid
@@ -1099,7 +1041,7 @@ body
   strong, small, time
     display: block
   strong
-    color: #eef4fb
+    color: #f4fbff
   small
     margin-top: 5px
     color: #9fb3d2
@@ -1119,7 +1061,7 @@ body
   overflow: hidden
   border: 1px solid rgba(116,198,255,0.18)
   border-radius: 14px
-  color: #b7c5da
+  color: #c9d7ea
   background: linear-gradient(145deg, rgba(9, 23, 45, 0.96), rgba(3, 9, 21, 0.92))
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.05)
   text-decoration: none
@@ -1137,7 +1079,7 @@ body
     text-decoration: none
   h2
     margin: 26px 0 12px
-    color: #eef4fb
+    color: #f7fbff
     font-size: 24px
   p
     margin: 0
@@ -1158,7 +1100,7 @@ body
       text-transform: uppercase
     h2
       margin: 6px 0 0
-      color: #eef4fb
+      color: #f7fbff
       font-size: 28px
 
 #sidebar
@@ -1170,7 +1112,7 @@ body
   padding: 20px
   border: 1px solid rgba(116,247,209,0.28)
   border-radius: 14px
-  color: #b7c5da
+  color: #c9d7ea
   background:
     radial-gradient(circle at 100% 0%, rgba(116,247,209,0.18), transparent 38%),
     linear-gradient(145deg, rgba(7, 22, 43, 0.96), rgba(2, 8, 18, 0.94))
@@ -1178,7 +1120,7 @@ body
   strong
     display: block
     margin-top: 6px
-    color: #eef4fb
+    color: #f7fbff
     font-size: 19px
     letter-spacing: 0.08em
   p
@@ -1205,7 +1147,7 @@ body
   gap: 10px
   margin: 0 0 10px
   padding: 0 0 12px
-  color: #eef4fb
+  color: #ffffff
   font-size: 15px
   text-shadow: 0 0 16px rgba(116,247,209,0.28)
   span
