@@ -61,20 +61,24 @@ minify_css: true
 minify_js: true
 
 # ===============
-# Comment system
+# Comment system —— Waline
 # ===============
+# Waline 把密钥放在服务端，前端只暴露 serverURL，因此不会像 Valine 那样
+# 把 LeanCloud appId/appKey 泄漏给所有访客。
+#
+# serverURL 为空时整套评论/点赞/阅读量都不会加载，站点照常工作。
+# 部署完服务端后把地址填进来即可（结尾不要带斜杠）。
+#   例：https://my-waline.vercel.app
 disqus_shortname:
-valine:
-  enable: true
-  appId: YOUR_LEANCLOUD_APPID
-  appKey: YOUR_LEANCLOUD_APPKEY
-  notify: false
-  verify: false
+waline:
+  serverURL:
+  lang: zh-CN
+  placeholder: 在这里留下你的观测信号
+  requiredMeta: nick,mail
   pageSize: 10
-  avatar: identicon
-  lang: zh-cn
-  placeholder: 在这里留下你的观测信号 💬
-  guest_info: nick,mail,link
-  recordIP: true
-  enableQQ: true
-  requiredFields: nick,mail
+  # 文章页的「赞」——Waline 的 reaction，计数存在服务端，全站共享
+  reaction: true
+  # 列表页显示评论数
+  commentCount: true
+  # 阅读量统计
+  pageview: true

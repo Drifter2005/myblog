@@ -110,7 +110,6 @@
   function refreshDynamic() {
     // 重新绑定内容区里的交互（这些模块各自暴露了 refresh 钩子）
     if (typeof window.CosmicRefresh === 'function') window.CosmicRefresh();
-    if (typeof window.LikeSystemRefresh === 'function') window.LikeSystemRefresh();
 
     // fancybox（若启用）
     if (window.jQuery && typeof window.jQuery.fn.fancybox === 'function') {
@@ -119,14 +118,9 @@
       } catch (e) { /* 忽略 */ }
     }
 
-    // Valine 评论：内容换了要重新挂载
-    if (window.Valine && document.querySelector('.vcomment')) {
-      try {
-        new window.Valine({ el: '.vcomment' });
-      } catch (e) { /* 忽略 */ }
-    }
-
     updateNavActive();
+    // Waline 的重新挂载由 waline-init.js 监听 pjax:done 自行处理，
+    // 这里不直接触碰，避免两处管理同一个实例。
   }
 
   function updateNavActive() {

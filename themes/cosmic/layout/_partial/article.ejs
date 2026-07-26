@@ -39,35 +39,32 @@
         <%- post.content %>
       </div>
     <% } %>
-    <% if (index){ %>
-      <footer class="article-footer">
-        <a data-url="<%- post.permalink %>" data-id="<%= post._id %>" data-title="<%= post.title %>" class="article-share-link"><span class="fa fa-share"><%= __('share') %></span></a>
-        <!-- 点赞按钮 -->
-        <button class="like-btn" data-post="<%- url_for(post.path) %>" title="点赞此文章">
-          <span class="like-icon">❤️</span>
-          <span class="like-count">0</span>
-        </button>
-        <% if (post.comments && theme.disqus_shortname){ %>
-          <a href="<%- post.permalink %>#disqus_thread" class="article-comment-link"><span class="fa fa-comment"><%= __('comment') %></span></a>
-        <% } %>
-        <% if (post.comments && theme.valine.enable && theme.valine.appId && theme.valine.appKey ){ %>
-          <a href="<%- url_for(post.path) %>#comments" class="article-comment-link">
-            <span class="post-comments-count valine-comment-count fa fa-comment" data-xid="<%- url_for(post.path) %>" itemprop="commentCount"></span>
-            <%= __('comment') %>
-          </a>
-        <% } %>
-        <%- partial('post/tag') %>
-      </footer>
-    <% } else { %>
-      <footer class="article-footer">
-        <a data-url="<%- post.permalink %>" data-id="<%= post._id %>" data-title="<%= post.title %>" class="article-share-link"><span class="fa fa-share"><%= __('share') %></span></a>
-        <button class="like-btn" data-post="<%- url_for(post.path) %>" title="点赞此文章" aria-pressed="false">
-          <span class="like-icon">❤️</span>
-          <span class="like-count">0</span>
-        </button>
-        <%- partial('post/tag') %>
-      </footer>
-    <% } %>
+    <%
+      // Waline 用归一化后的 path 作为文章标识，必须与 waline-init.js 里的
+      // normalizePath 结果一致，否则计数器和评论列表会对不上。
+      var walineOn = theme.waline && theme.waline.serverURL;
+      var walinePath = url_for(post.path).replace(/index\.html$/, '');
+      if (walinePath.slice(-1) !== '/') walinePath += '/';
+    %>
+    <footer class="article-footer">
+      <a data-url="<%- post.permalink %>" data-id="<%= post._id %>" data-title="<%= post.title %>" class="article-share-link"><span class="fa fa-share"><%= __('share') %></span></a>
+      <% if (walineOn && theme.waline.pageview !== false){ %>
+        <span class="article-metric" title="阅读量">
+          <span class="fa fa-eye" aria-hidden="true"></span>
+          <span class="waline-pageview-count" data-path="<%= walinePath %>">–</span>
+        </span>
+      <% } %>
+      <% if (index && post.comments && walineOn && theme.waline.commentCount !== false){ %>
+        <a href="<%- url_for(post.path) %>#comments" class="article-comment-link" title="评论数">
+          <span class="fa fa-comment" aria-hidden="true"></span>
+          <span class="waline-comment-count" data-path="<%= walinePath %>" itemprop="commentCount">–</span>
+        </a>
+      <% } %>
+      <% if (index && post.comments && theme.disqus_shortname){ %>
+        <a href="<%- post.permalink %>#disqus_thread" class="article-comment-link"><span class="fa fa-comment"><%= __('comment') %></span></a>
+      <% } %>
+      <%- partial('post/tag') %>
+    </footer>
   </div>
   <% if (!index){ %>
     <%- partial('post/nav') %>
@@ -81,8 +78,10 @@
   </div>
 </section>
 <% } %>
-<% if (!index && post.comments && theme.valine.enable && theme.valine.appId && theme.valine.appKey){ %>
-  <section id="comments" class="vcomment">
-
+<% if (!index && post.comments && theme.waline && theme.waline.serverURL){ %>
+  <section id="comments" class="comment-section">
+    <h2 class="comment-title">观测信号</h2>
+    <%- partial('post/comment-noscript') %>
+    <div id="waline"></div>
   </section>
 <% } %>
