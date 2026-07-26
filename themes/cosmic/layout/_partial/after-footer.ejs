@@ -30,6 +30,7 @@
 
 <% /* asset_version(path) 按文件内容哈希 —— 只有真正改过的文件才换 URL */ %>
 <script src="<%= url_for('js/script.js') %>?v=<%= asset_version('js/script.js') %>"></script>
+<script src="<%= url_for('js/likes.js') %>?v=<%= asset_version('js/likes.js') %>"></script>
 <script src="<%= url_for('js/music-player.js') %>?v=<%= asset_version('js/music-player.js') %>"></script>
 <script src="<%= url_for('js/cosmic.js') %>?v=<%= asset_version('js/cosmic.js') %>"></script>
 <script src="<%= url_for('js/pjax.js') %>?v=<%= asset_version('js/pjax.js') %>"></script>

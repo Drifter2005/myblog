@@ -49,6 +49,11 @@
     %>
     <footer class="article-footer">
       <a data-url="<%- post.permalink %>" data-id="<%= post._id %>" data-title="<%= post.title %>" class="article-share-link"><span class="fa fa-share"><%= __('share') %></span></a>
+      <%# 鼓掌式点赞：同一访客可以连续点多次，每次 +1 %>
+      <button class="like-btn" type="button" data-post="<%- url_for(post.path) %>" title="点赞（可以点很多次）" aria-label="点赞此文章">
+        <span class="like-icon" aria-hidden="true">❤️</span>
+        <span class="like-count">0</span>
+      </button>
       <% if (walineOn && theme.waline.pageview !== false){ %>
         <span class="article-metric" title="阅读量">
           <span class="fa fa-eye" aria-hidden="true"></span>

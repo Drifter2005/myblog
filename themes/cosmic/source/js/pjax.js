@@ -140,6 +140,7 @@
   function refreshDynamic() {
     // 重新绑定内容区里的交互（这些模块各自暴露了 refresh 钩子）
     if (typeof window.CosmicRefresh === 'function') window.CosmicRefresh();
+    if (typeof window.LikeSystemRefresh === 'function') window.LikeSystemRefresh();
 
     // 图片图注与 fancybox 包裹：script.js 里那段是一次性遍历，
     // 换入的新文章必须重跑一次，否则图片失去灯箱和图注。

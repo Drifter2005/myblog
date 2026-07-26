@@ -76,8 +76,9 @@ waline:
   placeholder: 在这里留下你的观测信号
   requiredMeta: nick,mail
   pageSize: 10
-  # 文章页的「赞」——Waline 的 reaction，计数存在服务端，全站共享
-  reaction: true
+  # 点赞由文章页脚的鼓掌式按钮承担（likes.js，可连续点多次），
+  # Waline 的 reaction 关闭以免两套点赞并存
+  reaction: false
   # 列表页显示评论数
   commentCount: true
   # 阅读量统计

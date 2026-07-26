@@ -129,16 +129,8 @@ body.player-hidden
   padding-bottom: 0
 
 // ====== 播放动画 ======
-
-body.music-playing
-  .aplayer-pic
-    animation: aplayer-rotation 3s linear infinite !important
-
-@keyframes aplayer-rotation
-  from
-    transform: rotate(0deg)
-  to
-    transform: rotate(360deg)
+// 不旋转封面：暂停键叠在封面内部，旋转会带着按钮一起转。
+// 播放状态用隐藏态 toggle 按钮的音符呼吸（playerNotePulse）指示。
 
 // ====== 覆盖层优化 ======
 
