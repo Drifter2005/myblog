@@ -1,0 +1,39 @@
+// ====== PJAX 局部刷新的视觉反馈 ======
+
+.pjax-progress
+  position: fixed
+  top: 0
+  left: 0
+  z-index: 2000
+  height: 2px
+  width: 0
+  pointer-events: none
+  opacity: 0
+  background: linear-gradient(90deg, #74f7d1, #8eb6ff, #f6d99d)
+  box-shadow: 0 0 12px rgba(116, 247, 209, 0.6)
+
+  &.active
+    opacity: 1
+    width: 82%
+    transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease
+
+  &.done
+    opacity: 0
+    width: 100%
+    transition: width 0.22s ease, opacity 0.3s ease 0.1s
+
+// 切换过程中内容轻微淡出，落地时由 .article/.widget-wrap 的入场动画接管
+// 只作用于内容区，header/footer 保持稳定
+#content-outer
+  transition: opacity 0.2s ease
+
+body.pjax-loading #content-outer
+  opacity: 0.55
+
+@media (prefers-reduced-motion: reduce)
+  .pjax-progress,
+  #content-outer
+    transition: none !important
+
+  body.pjax-loading #content-outer
+    opacity: 1

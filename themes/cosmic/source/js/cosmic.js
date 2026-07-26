@@ -11,6 +11,8 @@
   var height = 0;
   var dpr = 1;
   var mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2, active: false };
+  var mouseThrottle = 0;
+  var lastFrameTime = 0;
 
   body.classList.add('cosmic-ready');
 
@@ -28,6 +30,7 @@
   }
 
   window.addEventListener('pointermove', function (event) {
+    if (mouseThrottle++ % 2 !== 0) return;
     mouse.x = event.clientX;
     mouse.y = event.clientY;
     if (!mouse.active) {
@@ -53,16 +56,16 @@
     canvas.style.height = height + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    var count = clamp(Math.floor((width * height) / 7600), 80, 230);
+    var count = clamp(Math.floor((width * height) / 8200), 60, 200);
     stars = Array.from({ length: count }, function (_, index) {
       var depth = Math.random();
       return {
         x: Math.random() * width,
         y: Math.random() * height,
-        z: 0.35 + depth * 1.35,
-        r: 0.45 + Math.random() * 1.65,
-        vx: (-0.08 + Math.random() * 0.16) * (0.4 + depth),
-        vy: (0.035 + Math.random() * 0.13) * (0.45 + depth),
+        z: 0.32 + depth * 1.4,
+        r: 0.5 + Math.random() * 1.5,
+        vx: (-0.06 + Math.random() * 0.12) * (0.35 + depth),
+        vy: (0.025 + Math.random() * 0.1) * (0.4 + depth),
         pulse: Math.random() * Math.PI * 2,
         hue: index % 5 === 0 ? '116,247,209' : '220,236,255'
       };
@@ -71,25 +74,31 @@
 
   function drawStars(time) {
     if (!ctx || reducedMotion) return;
+    var now = performance.now();
+    var delta = now - lastFrameTime;
+    lastFrameTime = now;
+
+    if (delta < 16) return;
+
     ctx.clearRect(0, 0, width, height);
     var gravityX = (mouse.x - width / 2) / width;
     var gravityY = (mouse.y - height / 2) / height;
 
     for (var i = 0; i < stars.length; i += 1) {
       var star = stars[i];
-      star.x += star.vx + gravityX * star.z * 0.12;
-      star.y += star.vy + gravityY * star.z * 0.08;
+      star.x += star.vx + gravityX * star.z * 0.08;
+      star.y += star.vy + gravityY * star.z * 0.06;
 
       if (star.x < -10) star.x = width + 10;
       if (star.x > width + 10) star.x = -10;
       if (star.y > height + 10) star.y = -10;
       if (star.y < -10) star.y = height + 10;
 
-      var twinkle = 0.42 + Math.sin(time / 780 + star.pulse) * 0.22 + star.z * 0.22;
+      var twinkle = 0.48 + Math.sin(time / 820 + star.pulse) * 0.24 + star.z * 0.18;
       ctx.beginPath();
-      ctx.fillStyle = 'rgba(' + star.hue + ',' + clamp(twinkle, 0.22, 0.95) + ')';
-      ctx.shadowColor = 'rgba(116,247,209,0.42)';
-      ctx.shadowBlur = star.z * 8;
+      ctx.fillStyle = 'rgba(' + star.hue + ',' + clamp(twinkle, 0.24, 0.92) + ')';
+      ctx.shadowColor = 'rgba(116,247,209,0.38)';
+      ctx.shadowBlur = Math.max(star.z * 6, 2);
       ctx.arc(star.x, star.y, star.r * star.z, 0, Math.PI * 2);
       ctx.fill();
     }
@@ -98,6 +107,8 @@
     requestAnimationFrame(drawStars);
   }
 
+  var revealObserver = null;
+
   function revealOnScroll() {
     var targets = document.querySelectorAll('.article, .widget-wrap');
     if (!('IntersectionObserver' in window)) {
@@ -105,26 +116,39 @@
       return;
     }
 
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.14, rootMargin: '0px 0px -6% 0px' });
+    if (!revealObserver) {
+      revealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
+    }
 
-    targets.forEach(function (target) { observer.observe(target); });
+    targets.forEach(function (target) {
+      if (target.classList.contains('in-view')) return;
+      revealObserver.observe(target);
+    });
   }
 
   function attachCardLight() {
     document.querySelectorAll('.article-inner').forEach(function (card) {
+      // PJAX 换入的新节点才需要绑定，避免重复挂载
+      if (card.dataset.cardLight === '1') return;
+      card.dataset.cardLight = '1';
+
+      var rafId = null;
       card.addEventListener('pointermove', function (event) {
-        var rect = card.getBoundingClientRect();
-        var x = ((event.clientX - rect.left) / rect.width) * 100;
-        var y = ((event.clientY - rect.top) / rect.height) * 100;
-        card.style.setProperty('--cosmic-card-x', x.toFixed(2) + '%');
-        card.style.setProperty('--cosmic-card-y', y.toFixed(2) + '%');
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(function() {
+          var rect = card.getBoundingClientRect();
+          var x = ((event.clientX - rect.left) / rect.width) * 100;
+          var y = ((event.clientY - rect.top) / rect.height) * 100;
+          card.style.setProperty('--cosmic-card-x', x.toFixed(1) + '%');
+          card.style.setProperty('--cosmic-card-y', y.toFixed(1) + '%');
+        });
       }, { passive: true });
     });
   }
@@ -137,8 +161,16 @@
     if (ctx && !reducedMotion) requestAnimationFrame(drawStars);
   }
 
+  // PJAX 换入新内容后重新绑定内容区交互（星空/光晕是全局的，无需重建）
+  window.CosmicRefresh = function () {
+    revealOnScroll();
+    attachCardLight();
+  };
+
+  var resizeTimeout;
   window.addEventListener('resize', function () {
-    buildStars();
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(buildStars, 300);
   });
 
   if (document.readyState === 'loading') {

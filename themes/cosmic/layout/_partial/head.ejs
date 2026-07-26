@@ -19,9 +19,14 @@
   }
   %>
   <title><% if (title){ %><%= title %> | <% } %><%= config.title %></title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="theme-color" content="#06111f">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5, user-scalable=yes">
+  <meta name="theme-color" content="#04050d">
+  <meta name="color-scheme" content="dark">
   <meta name="description" content="<%= config.description || '算法、CTF 与安全研究日志' %>">
+  <meta name="generator" content="Hexo">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
   <%- open_graph({twitter_id: theme.twitter, fb_admins: theme.fb_admins, fb_app_id: theme.fb_app_id}) %>
   <% if (config.feed) { %>
     <%- feed_tag() %>
@@ -31,12 +36,20 @@
   <% if (theme.favicon){ %>
     <%- favicon_tag(theme.favicon) %>
   <% } %>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
   <% if (config.highlight.enable){ %>
-    <%- css('https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css') %>
+    <%- css('https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css', {async: true}) %>
   <% } %>
-  <%- css('css/style') %>
+  <!-- APlayer 音乐播放器 -->
+  <%- css('https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css') %>
+  <link rel="stylesheet" href="<%= url_for('css/style.css') %>?v=<%= asset_version() %>">
   <% if (theme.fancybox){ %>
-    <%- css('fancybox/jquery.fancybox.min.css') %>
+    <%- css('fancybox/jquery.fancybox.min.css', {async: true}) %>
   <% } %>
-  <%- css('https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css') %>
+  <%- css('https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css', {async: true}) %>
+  <style>
+    html { scroll-padding-top: 80px; }
+    body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  </style>
 </head>

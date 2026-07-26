@@ -42,6 +42,11 @@
     <% if (index){ %>
       <footer class="article-footer">
         <a data-url="<%- post.permalink %>" data-id="<%= post._id %>" data-title="<%= post.title %>" class="article-share-link"><span class="fa fa-share"><%= __('share') %></span></a>
+        <!-- 点赞按钮 -->
+        <button class="like-btn" data-post="<%- url_for(post.path) %>" title="点赞此文章">
+          <span class="like-icon">❤️</span>
+          <span class="like-count">0</span>
+        </button>
         <% if (post.comments && theme.disqus_shortname){ %>
           <a href="<%- post.permalink %>#disqus_thread" class="article-comment-link"><span class="fa fa-comment"><%= __('comment') %></span></a>
         <% } %>
@@ -51,6 +56,15 @@
             <%= __('comment') %>
           </a>
         <% } %>
+        <%- partial('post/tag') %>
+      </footer>
+    <% } else { %>
+      <footer class="article-footer">
+        <a data-url="<%- post.permalink %>" data-id="<%= post._id %>" data-title="<%= post.title %>" class="article-share-link"><span class="fa fa-share"><%= __('share') %></span></a>
+        <button class="like-btn" data-post="<%- url_for(post.path) %>" title="点赞此文章" aria-pressed="false">
+          <span class="like-icon">❤️</span>
+          <span class="like-count">0</span>
+        </button>
         <%- partial('post/tag') %>
       </footer>
     <% } %>

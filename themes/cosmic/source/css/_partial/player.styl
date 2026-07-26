@@ -1,0 +1,241 @@
+// ====== 音乐播放器样式 ======
+
+#music-player-host
+  z-index: 999
+  position: fixed
+  bottom: 0
+  left: 0
+  right: 0
+  width: 100%
+  height: auto
+
+.aplayer
+  background: linear-gradient(135deg, rgba(7, 18, 36, 0.95), rgba(4, 9, 21, 0.92)) !important
+  border-top: 1px solid rgba(116, 247, 209, 0.28) !important
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.48) !important
+  backdrop-filter: blur(20px) !important
+
+  .aplayer-info
+    background: transparent !important
+
+  .aplayer-music
+    .aplayer-title
+      color: #f4fbff !important
+      font-weight: 600
+
+    .aplayer-author
+      color: #a9bbd9 !important
+
+  .aplayer-controller
+    background: transparent !important
+
+  .aplayer-bar-wrap
+    background: transparent !important
+
+    .aplayer-bar
+      background: rgba(116, 247, 209, 0.2) !important
+
+      .aplayer-played
+        background: linear-gradient(90deg, #74f7d1, #8eb6ff) !important
+        box-shadow: 0 0 12px rgba(116, 247, 209, 0.4)
+
+      .aplayer-thumb
+        background: #74f7d1 !important
+        box-shadow: 0 0 8px rgba(116, 247, 209, 0.6)
+
+  .aplayer-button
+    color: #dcecff !important
+    transition: all 0.28s ease !important
+
+    &:hover
+      color: #74f7d1 !important
+      text-shadow: 0 0 12px rgba(116, 247, 209, 0.4)
+
+  .aplayer-volume-bar-wrap
+    .aplayer-volume-bar
+      background: rgba(116, 247, 209, 0.16) !important
+
+      .aplayer-volume
+        background: linear-gradient(90deg, #74f7d1, #8eb6ff) !important
+
+  .aplayer-list
+    background: rgba(4, 11, 23, 0.92) !important
+    border-top: 1px solid rgba(116, 247, 209, 0.16) !important
+    backdrop-filter: blur(16px) !important
+
+    .aplayer-list-head
+      color: #74f7d1 !important
+      border-bottom: 1px solid rgba(116, 247, 209, 0.16) !important
+
+    .aplayer-list-item
+      background: transparent !important
+      border-bottom: 1px solid rgba(116, 247, 209, 0.1) !important
+      color: #c9d7ea !important
+      transition: all 0.25s ease !important
+
+      &:hover
+        background: rgba(116, 247, 209, 0.08) !important
+        color: #74f7d1 !important
+
+      &.aplayer-list-item-current
+        background: rgba(116, 247, 209, 0.12) !important
+        color: #74f7d1 !important
+        border-left: 3px solid #74f7d1 !important
+
+  .aplayer-lrc
+    background: transparent !important
+    color: #a9bbd9 !important
+
+    .aplayer-lrc-item
+      &.aplayer-lrc-item-current
+        color: #74f7d1 !important
+        text-shadow: 0 0 12px rgba(116, 247, 209, 0.4)
+
+// ====== 播放器响应式 ======
+
+@media screen and (max-width: 479px)
+  #aplayer
+    height: auto
+
+  .aplayer
+    padding: 10px !important
+
+    .aplayer-pic
+      width: 40px !important
+      height: 40px !important
+
+    .aplayer-info
+      margin-left: 50px !important
+
+    .aplayer-controller
+      min-width: 100px !important
+
+// ====== 播放动画 ======
+
+body.music-playing
+  .aplayer-pic
+    animation: aplayer-rotation 3s linear infinite !important
+
+@keyframes aplayer-rotation
+  from
+    transform: rotate(0deg)
+  to
+    transform: rotate(360deg)
+
+// ====== 覆盖层优化 ======
+
+.aplayer-mask
+  background: linear-gradient(to right, rgba(4, 11, 23, 0.8), transparent) !important
+
+.aplayer-body
+  height: auto !important
+
+// ====== 播放器提示信息 ======
+
+.aplayer-notice
+  background: rgba(116, 247, 209, 0.12) !important
+  color: #74f7d1 !important
+  border: 1px solid rgba(116, 247, 209, 0.28) !important
+  border-radius: 8px !important
+
+// ====== 显示 / 隐藏切换按钮 ======
+// 挂在 body 上，独立于 APlayer 内部 DOM，避免与其布局冲突。
+
+.player-toggle
+  position: fixed
+  right: 20px
+  bottom: 86px
+  z-index: 1001
+  display: flex
+  align-items: center
+  justify-content: center
+  width: 42px
+  height: 42px
+  padding: 0
+  border: 1px solid rgba(116, 247, 209, 0.34)
+  border-radius: 50%
+  color: #74f7d1
+  background: linear-gradient(145deg, rgba(9, 26, 48, 0.94), rgba(3, 9, 21, 0.9))
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.06)
+  backdrop-filter: blur(14px)
+  cursor: pointer
+  -webkit-tap-highlight-color: transparent
+  transition: transform 0.34s cubic-bezier(0.2, 0.8, 0.2, 1),
+              bottom 0.42s cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-color 0.3s ease,
+              color 0.3s ease,
+              box-shadow 0.3s ease
+
+  svg
+    width: 19px
+    height: 19px
+    display: block
+    transition: transform 0.34s cubic-bezier(0.2, 0.8, 0.2, 1)
+
+  &:hover
+    color: #071426
+    border-color: transparent
+    background: linear-gradient(135deg, #74f7d1, #8eb6ff)
+    box-shadow: 0 14px 34px rgba(116, 247, 209, 0.28)
+    transform: translateY(-3px)
+
+  &:active
+    transform: translateY(-1px) scale(0.94)
+
+  &:focus-visible
+    outline: 2px solid rgba(116, 247, 209, 0.7)
+    outline-offset: 3px
+
+// 隐藏态：按钮落到屏幕右下角，图标换成音符并轻微呼吸
+body.player-hidden .player-toggle
+  bottom: 20px
+  border-color: rgba(116, 247, 209, 0.5)
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.44), 0 0 22px rgba(116, 247, 209, 0.16)
+
+body.player-hidden.music-playing .player-toggle svg
+  animation: playerNotePulse 1.9s ease-in-out infinite
+
+@keyframes playerNotePulse
+  0%, 100%
+    transform: scale(1)
+    opacity: 0.9
+  50%
+    transform: scale(1.14)
+    opacity: 1
+
+// ====== 播放器隐藏状态 ======
+// .aplayer 是 position:fixed 的根元素，对它做 transform 会成为
+// 内部 fixed 子元素(.aplayer-body)的包含块，因此整体一起移动。
+
+.aplayer.aplayer-fixed
+  transition: transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1),
+              opacity 0.34s ease
+  will-change: transform
+
+body.player-hidden .aplayer.aplayer-fixed
+  transform: translateY(460px)
+  opacity: 0
+  pointer-events: none
+
+// 首次载入按存储状态就位时禁用动画，避免闪烁
+body.player-no-anim .aplayer.aplayer-fixed,
+body.player-no-anim .player-toggle
+  transition: none !important
+
+@media screen and (max-width: 479px)
+  .player-toggle
+    right: 14px
+    bottom: 78px
+    width: 40px
+    height: 40px
+
+  body.player-hidden .player-toggle
+    bottom: 16px
+
+@media (prefers-reduced-motion: reduce)
+  .player-toggle,
+  .aplayer.aplayer-fixed
+    transition: none !important
+
+  body.player-hidden.music-playing .player-toggle svg
+    animation: none !important

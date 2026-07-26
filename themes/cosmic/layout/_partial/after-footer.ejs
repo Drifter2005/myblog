@@ -1,31 +1,44 @@
 <% if (theme.disqus_shortname){ %>
-<script>
-  var disqus_shortname = '<%= theme.disqus_shortname %>';
-  <% if (page.permalink){ %>
-  var disqus_url = '<%= page.permalink %>';
-  <% } %>
-  (function(){
-    var dsq = document.createElement('script');
-    dsq.async = true;
-    dsq.src = 'https://' + disqus_shortname + '.disqus.com/<% if (page.comments) { %>embed.js<% } else { %>count.js<% } %>';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script defer>
+  window.addEventListener('load', function() {
+    var disqus_shortname = '<%= theme.disqus_shortname %>';
+    <% if (page.permalink){ %>
+    var disqus_url = '<%= page.permalink %>';
+    <% } %>
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.async = true;
+      dsq.src = 'https://' + disqus_shortname + '.disqus.com/<% if (page.comments) { %>embed.js<% } else { %>count.js<% } %>';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  });
 </script>
 <% } %>
 
+<!-- 音乐播放器容器（id 不用 "aplayer"：那会在 window 上创建同名全局引用，与脚本判断冲突） -->
+<div id="music-player-host"></div>
+
 <%- js('js/jquery-3.6.4.min.js') %>
 
+<!-- APlayer 音乐播放器脚本 -->
+<%- js('https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js') %>
+
 <% if (theme.fancybox){ %>
-  <%- js('fancybox/jquery.fancybox.min.js') %>
+  <%- js('fancybox/jquery.fancybox.min.js', {defer: true}) %>
 <% } %>
 
-<%- js('js/script') %>
-<%- js('js/cosmic') %>
+<% /* asset_version 每次构建变化一次，用于让部署后的浏览器丢弃旧脚本缓存 */ %>
+<% var assetVer = asset_version(); %>
+<script src="<%= url_for('js/script.js') %>?v=<%= assetVer %>"></script>
+<script src="<%= url_for('js/likes.js') %>?v=<%= assetVer %>"></script>
+<script src="<%= url_for('js/music-player.js') %>?v=<%= assetVer %>"></script>
+<script src="<%= url_for('js/cosmic.js') %>?v=<%= assetVer %>"></script>
+<script src="<%= url_for('js/pjax.js') %>?v=<%= assetVer %>"></script>
 <%- partial('gauges-analytics') %>
 
 <% if(theme.valine.enable && theme.valine.appId && theme.valine.appKey){ %>
-  <%- js('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js') %>
-<script>
+  <%- js('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', {defer: true}) %>
+<script defer>
     var GUEST_INFO = ['nick','mail','link'];
     var guest_info = '<%= theme.valine.guest_info %>'.split(',').filter(function(item){
         return GUEST_INFO.indexOf(item) > -1

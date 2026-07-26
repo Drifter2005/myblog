@@ -53,17 +53,28 @@ fb_admins:
 fb_app_id:
 
 # ===============
+# Performance
+# ===============
+preload_fonts: true
+optimize_images: true
+minify_css: true
+minify_js: true
+
+# ===============
 # Comment system
 # ===============
 disqus_shortname:
 valine:
-  enable: false
-  appId:
-  appKey:
+  enable: true
+  appId: YOUR_LEANCLOUD_APPID
+  appKey: YOUR_LEANCLOUD_APPKEY
   notify: false
   verify: false
   pageSize: 10
-  avatar: mm
+  avatar: identicon
   lang: zh-cn
-  placeholder: 在这里留下你的观测信号
+  placeholder: 在这里留下你的观测信号 💬
   guest_info: nick,mail,link
+  recordIP: true
+  enableQQ: true
+  requiredFields: nick,mail

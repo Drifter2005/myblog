@@ -100,6 +100,13 @@ theme: cosmic
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
+#
+# ⚠️ 正常发布流程不需要用这里 —— 推送本仓库 main 后由
+#    .github/workflows/deploy.yml 自动构建并发布，那才是唯一权威路径。
+#
+# ⚠️ repo 必须始终是 Drifter2005.github.io（Pages 仓库）。
+#    绝对不要改成本仓库 myblog：hexo-deployer-git 是强制推送构建产物的，
+#    指向源码仓库会把 source/ 和 themes/ 整个覆盖掉。（2026-07-26 曾因此丢过一次源码）
 deploy:
   type: git
   repo: https://github.com/Drifter2005/Drifter2005.github.io.git
