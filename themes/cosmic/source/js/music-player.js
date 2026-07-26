@@ -172,7 +172,16 @@
     });
 
     player.on('error', function () {
-      console.error('[player] 当前音轨加载失败，请检查 /music/ 下的文件名是否与 PLAYLIST 一致');
+      // APlayer 在切歌 abort 时也会触发 error 事件；
+      // 只有 audio.error 真实存在才是加载失败。
+      var mediaError = player.audio && player.audio.error;
+      if (mediaError) {
+        console.error(
+          '[player] 音轨加载失败 (code ' + mediaError.code + ')，' +
+          '请检查 /music/ 下的文件名是否与 PLAYLIST 一致：',
+          player.audio.src
+        );
+      }
     });
 
     window.aplayer = player;
