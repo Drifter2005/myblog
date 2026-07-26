@@ -72,7 +72,7 @@ $nav-link
   opacity: 0.65
   text-decoration: none
   text-shadow: 0 1px rgba(0, 0, 0, 0.2)
-  transition: opacity 0.28s ease, text-shadow 0.28s ease
+  transition: opacity 0.2s ease, text-shadow 0.2s ease
   display: block
   padding: 20px 16px
   position: relative
@@ -131,23 +131,21 @@ button.nav-icon
     height: 40px
     top: 10px
 
+// backdrop-filter 已删：输入框走不透明深底，保证 banner 上可读
 .search-form
   position: absolute
   top: 0
   left: 0
   right: 0
-  background: rgba(116, 247, 209, 0.08)
+  background: rgba(4, 11, 23, 0.92)
   padding: 6px 16px
   border-radius: 999px
   border: 1px solid rgba(116, 247, 209, 0.22)
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2)
-  backdrop-filter: blur(10px)
-  transition: all 0.28s ease
+  transition: background 0.2s ease, border-color 0.2s ease
   &:hover,
   &:focus-within
-    background: rgba(116, 247, 209, 0.12)
+    background: rgba(7, 18, 36, 0.96)
     border-color: rgba(116, 247, 209, 0.34)
-    box-shadow: 0 12px 32px rgba(116, 247, 209, 0.15)
 
 .search-form-input
   border: none

@@ -22,13 +22,13 @@
     width: 100%
     transition: width 0.22s ease, opacity 0.3s ease 0.1s
 
-// 切换过程中内容轻微淡出，落地时由 .article/.widget-wrap 的入场动画接管
-// 只作用于内容区，header/footer 保持稳定
+// 两段式过渡：中间态必须全透明 —— 半透明中文压在深色底上会糊。
+// 落地时由 .article/.widget-wrap 的入场动画接管；只作用于内容区。
 #content-outer
-  transition: opacity 0.2s ease
+  transition: opacity 0.12s ease
 
 body.pjax-loading #content-outer
-  opacity: 0.55
+  opacity: 0
 
 @media (prefers-reduced-motion: reduce)
   .pjax-progress,

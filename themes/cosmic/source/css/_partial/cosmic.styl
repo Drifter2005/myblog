@@ -32,7 +32,6 @@ body
     background-size: 120px 120px, 210px 210px
     background-position: 0 0, 44px 72px
     opacity: 0.38
-    will-change: opacity
   &:after
     content: ""
     position: fixed
@@ -42,7 +41,6 @@ body
     background: linear-gradient(transparent 0, rgba(116, 198, 255, 0.032) 50%, transparent 100%)
     background-size: 100% 6px
     mix-blend-mode: screen
-    will-change: none
 
 #container
   z-index: 1
@@ -85,8 +83,9 @@ body
   bottom: -80px
 
 #header
-  min-height: 430px
-  height: 58vh
+  // masthead 收敛：从 58vh/430px 收到桌面 ≤320px（正文更早进入首屏）
+  min-height: 260px
+  height: unquote("min(38vh, 320px)")
   border-bottom: 1px solid rgba(116, 247, 209, 0.26)
   box-shadow: inset 0 -100px 140px rgba(5, 9, 21, 0.82)
   overflow: hidden
@@ -95,11 +94,9 @@ body
     background:
       radial-gradient(circle at 50% 42%, rgba(116, 247, 209, 0.16), transparent 24%),
       linear-gradient(rgba(1, 4, 14, 0.32), rgba(1, 4, 14, 0.82))
-    will-change: transform
   &:after
     height: 46%
     background: linear-gradient(transparent, rgba(5, 9, 21, 0.96))
-    will-change: transform
 
 #banner
   background:
@@ -150,7 +147,7 @@ body
 
 #logo
   color: #eef4fb
-  font-size: 58px
+  font-size: clamp(30px, 5vw, 44px)
   // header.styl 的 line-height 按 40px 字号写死，这里字号放大后必须同步，
   // 否则标题换行时字形重叠。
   line-height: 1.15
@@ -176,7 +173,7 @@ body
   span
     padding: 7px 12px
     border: 1px solid rgba(116, 198, 255, 0.22)
-    border-radius: 12px
+    border-radius: 6px
     color: #b7c5da
     background: rgba(4, 11, 23, 0.56)
     font-family: font-mono
@@ -212,13 +209,12 @@ body
 .article
   margin: 36px 0
 
+// 卡片层次 = 背景明度台阶 + 1px 边框 + 顶部受光边（不再用大黑影与 backdrop-filter）
 .article-inner
   border: 1px solid rgba(116, 198, 255, 0.16)
-  border-radius: 28px
-  background: linear-gradient(145deg, rgba(8, 19, 38, 0.88), rgba(4, 9, 21, 0.76))
-  box-shadow: 0 20px 72px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04)
-  backdrop-filter: blur(16px)
-  will-change: transform, box-shadow, border-color
+  border-radius: 14px
+  background: linear-gradient(145deg, rgba(10, 21, 38, 0.96), rgba(6, 13, 26, 0.94))
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05)
 
 .article-meta
   margin-left: 18px
@@ -303,7 +299,7 @@ body
     padding: 14px 20px
     text-align: left
     background: rgba(142, 182, 255, 0.06)
-    border-radius: 0 14px 14px 0
+    border-radius: 0 10px 10px 0
     color: #b8c9e6
     // 中文没有斜体传统，合成斜体难看
     font-style: normal
@@ -311,12 +307,12 @@ body
     color: #74f7d1
     background: rgba(116, 247, 209, 0.08)
     border: 1px solid rgba(116, 247, 209, 0.14)
-    border-radius: 5px
+    border-radius: 6px
     padding: 0.15em 0.4em
     font-size: 0.95em
   table
     overflow: hidden
-    border-radius: 14px
+    border-radius: 10px
     border: 1px solid rgba(116, 198, 255, 0.14)
     width: 100%
     table-layout: auto
@@ -328,7 +324,7 @@ body
     padding: 13px 14px
     border-bottom: 1px solid rgba(116, 198, 255, 0.1)
   img
-    border-radius: 12px
+    border-radius: 10px
     max-width: 100%
     height: auto
 
@@ -340,14 +336,12 @@ body
   font-weight: 600
   padding: 10px 20px
   border-radius: 999px
-  transition: all 0.32s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+  transition: background 0.18s ease, transform 0.18s ease
   text-decoration: none
-  box-shadow: 0 8px 24px rgba(116, 247, 209, 0.18)
   &:hover
     background: linear-gradient(90deg, #f6d99d, #74f7d1)
     color: #071426
-    transform: translateY(-2px)
-    box-shadow: 0 12px 32px rgba(116, 247, 209, 0.28)
+    transform: translateY(-1px)
 
 .article-footer
   border-top: 1px solid rgba(116, 198, 255, 0.15)
@@ -361,14 +355,12 @@ body
 
 .widget-wrap
   border: 1px solid rgba(116, 198, 255, 0.14)
-  border-radius: 24px
-  background: rgba(7, 18, 36, 0.62)
-  box-shadow: 0 16px 56px rgba(0,0,0,0.26)
-  backdrop-filter: blur(12px)
-  transition: border-color 0.3s ease, box-shadow 0.3s ease
+  border-radius: 14px
+  background: rgba(7, 18, 36, 0.9)
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05)
+  transition: border-color 0.2s ease
   &:hover
     border-color: rgba(116, 247, 209, 0.24)
-    box-shadow: 0 20px 64px rgba(0,0,0,0.32)
 
 .widget-title
   color: #eef4fb
@@ -404,7 +396,7 @@ body
       color: #8eb6ff
 
 .highlight
-  border-radius: 16px
+  border-radius: 10px
   overflow: hidden
   border: 1px solid rgba(116, 247, 209, 0.12)
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.03)
@@ -417,10 +409,6 @@ body
     color: inherit !important
 
 @media screen and (max-width: 479px)
-  #header
-    min-height: 520px
-  #logo
-    font-size: 36px
   .hero-kicker
     font-size: 10px
     letter-spacing: 0.14em
@@ -430,11 +418,8 @@ body
   .article-entry
     font-size: 15px
     line-height: 1.82
-  .article-inner
-    border-radius: 22px
   .portal-landing
     padding: 24px
-    border-radius: 28px
   .guide-card summary
     min-height: 130px
     padding: 18px
@@ -482,37 +467,12 @@ body.cosmic-pointer-active .cursor-halo
 .cosmic-background
   transition: transform 0.14s ease-out
 
-.cosmic-orbit
-  animation: orbitBreath 11s ease-in-out infinite alternate
-  will-change: transform, opacity
-
-.orbit-beta
-  animation-duration: 15s
-  animation-delay: -3.2s
-
-.orbit-gamma
-  animation-duration: 18s
-  animation-delay: -6.4s
-
-#banner
-  animation: nebulaDrift 18s ease-in-out infinite alternate
-
-.cosmic-grid
-  animation: gridDrift 22s linear infinite
-
+// 无限动画全部移除（orbitBreath / nebulaDrift / gridDrift / scanPulse /
+// spectralSweep / portalSweep / radarSpin）：nebulaDrift 的 hue-rotate
+// 让全站对比度不可认证；其余是纯装饰性常驻合成负担。
+// 一次性入场动画（logoIgnition / chipRise / in-view）保留。
 .cosmic-scanline
-  animation: scanPulse 4.8s ease-in-out infinite
-
-.hero-kicker
-  position: relative
-  overflow: hidden
-  &:after
-    content: ""
-    position: absolute
-    inset: 0
-    background: linear-gradient(110deg, transparent, rgba(255,255,255,0.38), transparent)
-    transform: translateX(-120%)
-    animation: spectralSweep 4.8s ease-in-out infinite
+  opacity: 0.4
 
 #logo
   position: relative
@@ -534,61 +494,34 @@ body.cosmic-ready #logo
   &:nth-child(4)
     animation-delay: 0.54s
 
+// 入场：去 scale（非整数缩放让中文字形重栅格化发糊），位移 12px，0.4s
 .article,
 .widget-wrap
   opacity: 0
-  transform: translateY(32px) scale(0.98)
-  transition: opacity 0.68s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.68s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.32s ease,
-              border-color 0.32s ease
-  will-change: opacity, transform
+  transform: translateY(12px)
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease
 
 .article.in-view,
 .widget-wrap.in-view
   opacity: 1
-  transform: translateY(0) scale(1)
+  transform: translateY(0)
 
 .article-inner
   position: relative
   overflow: hidden
-  transition: transform 0.36s cubic-bezier(0.2, 0.8, 0.2, 1),
-              box-shadow 0.36s cubic-bezier(0.2, 0.8, 0.2, 1),
-              border-color 0.36s ease
-  will-change: transform, box-shadow
-  &:before
-    content: ""
-    position: absolute
-    inset: -1px
-    pointer-events: none
-    opacity: 0
-    background: radial-gradient(circle at var(--cosmic-card-x, 50%) var(--cosmic-card-y, 50%), rgba(116,247,209,0.16), transparent 36%)
-    transition: opacity 0.32s ease
-    will-change: opacity
-  &:after
-    content: ""
-    position: absolute
-    left: -40%
-    top: 0
-    width: 38%
-    height: 100%
-    pointer-events: none
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent)
-    transform: skewX(-18deg)
-    transition: left 0.64s cubic-bezier(0.2, 0.8, 0.2, 1)
+  transition: transform 0.18s ease,
+              border-color 0.18s ease
 
+// hover 只走边框提亮 + 1px 位移，不再有大黑影/光斑/掠光
 .article-inner:hover
-  transform: translateY(-8px)
+  transform: translateY(-1px)
   border-color: rgba(116, 247, 209, 0.44)
-  box-shadow: 0 28px 104px rgba(0,0,0,0.42), 0 0 40px rgba(116,247,209,0.14), inset 0 1px 0 rgba(255,255,255,0.06)
-  &:before
-    opacity: 1
-  &:after
-    left: 110%
 
 .main-nav-link
   position: relative
-  transition: color 0.28s ease
+  transition: color 0.2s ease
   &:after
     content: ""
     position: absolute
@@ -599,7 +532,7 @@ body.cosmic-ready #logo
     background: linear-gradient(90deg, transparent, #74f7d1, transparent)
     transform: scaleX(0)
     transform-origin: center
-    transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1)
+    transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1)
   &:hover
     color: #74f7d1
   &:hover:after
@@ -607,42 +540,6 @@ body.cosmic-ready #logo
 
 // （SIGNAL TRACE 角标已删：选择器命中嵌套结构时每块渲染 3 个，且压行号。
 //  代码块的 margin 收进 highlight.styl 的 $code-block。）
-
-@keyframes orbitBreath
-  from
-    transform: rotate(-18deg) scale(1)
-    opacity: 0.70
-  to
-    transform: rotate(-11deg) scale(1.06)
-    opacity: 0.96
-
-@keyframes nebulaDrift
-  from
-    filter: hue-rotate(0deg) saturate(1.10)
-    transform: scale(1)
-  to
-    filter: hue-rotate(16deg) saturate(1.28)
-    transform: scale(1.03)
-
-@keyframes gridDrift
-  from
-    background-position: 0 0, 0 0
-  to
-    background-position: 64px 64px, 64px 64px
-
-@keyframes scanPulse
-  0%, 100%
-    opacity: 0.26
-    transform: translateY(0)
-  50%
-    opacity: 0.92
-    transform: translateY(-16px)
-
-@keyframes spectralSweep
-  0%, 55%
-    transform: translateX(-120%)
-  100%
-    transform: translateX(120%)
 
 @keyframes logoIgnition
   from
@@ -664,15 +561,28 @@ body.cosmic-ready #logo
     opacity: 1
     transform: translateY(0)
 
+// reduced-motion 走白名单：明确列出要停的入场/装饰动画。
+// 不做 * 毯子（那会杀死 APlayer 进度条的 transition，播放器看起来卡死），
+// .aplayer 内部一律不碰；播放器自身的例外写在 player.styl。
 @media (prefers-reduced-motion: reduce)
-  *, *:before, *:after
-    animation-duration: 0.001ms !important
-    animation-iteration-count: 1 !important
-    scroll-behavior: auto !important
-    transition-duration: 0.001ms !important
+  html
+    scroll-behavior: auto
   #starfield,
   .cursor-halo
     display: none
+  .article,
+  .widget-wrap
+    opacity: 1
+    transform: none
+    transition: none
+  .hero-metrics span
+    animation: none
+    opacity: 1
+    transform: none
+  body.cosmic-ready #logo
+    animation: none
+  .cosmic-background
+    transition: none
 
 html.loading
   body
@@ -721,22 +631,12 @@ body
   padding: 34px
   overflow: hidden
   border: 1px solid rgba(116,247,209,0.20)
-  border-radius: 34px
+  border-radius: 14px
   background:
     radial-gradient(circle at 20% 0%, rgba(116,247,209,0.16), transparent 34%),
-    linear-gradient(135deg, rgba(7, 22, 43, 0.90), rgba(2, 7, 18, 0.76))
-  box-shadow: 0 26px 96px rgba(0,0,0,0.44), inset 0 1px 0 rgba(255,255,255,0.06)
-  backdrop-filter: blur(20px)
-  transition: border-color 0.3s ease, box-shadow 0.3s ease
-  &:before
-    content: ""
-    position: absolute
-    inset: 0
-    pointer-events: none
-    background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.07) 42%, transparent 58%)
-    transform: translateX(-80%)
-    animation: portalSweep 8.2s ease-in-out infinite
-    will-change: transform
+    linear-gradient(135deg, rgba(7, 22, 43, 0.96), rgba(2, 7, 18, 0.92))
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06)
+  transition: border-color 0.2s ease
 
 .portal-panel
   position: relative
@@ -790,13 +690,12 @@ body
   // 按钮文案是中文（启动算法星图/…）：字距归零
   letter-spacing: 0
   text-decoration: none
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, color 0.25s ease
+  transition: transform 0.18s ease, border-color 0.18s ease, color 0.18s ease, background 0.18s ease
   &:hover
     color: #071426
     border-color: transparent
     background: linear-gradient(90deg, #74f7d1, #8eb6ff)
-    box-shadow: 0 0 30px rgba(116,247,209,0.24)
-    transform: translateY(-3px)
+    transform: translateY(-1px)
     text-decoration: none
 
 .portal-action.primary
@@ -804,12 +703,12 @@ body
   background: linear-gradient(90deg, #74f7d1, #f6d99d)
   border-color: transparent
 
+// 雷达缩到 180px，扫描束改为静态 conic-gradient（radarSpin 已删）
 .portal-radar
   position: relative
   z-index: 2
-  min-height: 320px
+  min-height: 180px
   border-radius: 50%
-  filter: drop-shadow(0 0 38px rgba(116,247,209,0.18))
 
 .radar-ring,
 .radar-sweep,
@@ -822,26 +721,24 @@ body
 
 .radar-ring
   border: 1px solid rgba(116,247,209,0.28)
-  box-shadow: inset 0 0 34px rgba(116,247,209,0.08), 0 0 22px rgba(142,182,255,0.12)
+  box-shadow: inset 0 0 34px rgba(116,247,209,0.08)
 
 .ring-one
-  width: 92px
-  height: 92px
+  width: 56px
+  height: 56px
 
 .ring-two
-  width: 184px
-  height: 184px
+  width: 116px
+  height: 116px
 
 .ring-three
-  width: 286px
-  height: 286px
+  width: 180px
+  height: 180px
 
 .radar-sweep
-  width: 286px
-  height: 286px
+  width: 180px
+  height: 180px
   background: conic-gradient(from 0deg, rgba(116,247,209,0.42), rgba(116,247,209,0.05), transparent 26%)
-  animation: radarSpin 6s linear infinite
-  will-change: transform
 
 .radar-core
   width: 18px
@@ -863,16 +760,14 @@ body
 
 .guide-card
   border: 1px solid rgba(116,198,255,0.18)
-  border-radius: 24px
-  background: linear-gradient(145deg, rgba(9,23,45,0.86), rgba(3,9,21,0.74))
-  box-shadow: 0 18px 64px rgba(0,0,0,0.32)
+  border-radius: 14px
+  background: linear-gradient(145deg, rgba(9,23,45,0.96), rgba(3,9,21,0.92))
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05)
   overflow: hidden
-  transition: border-color 0.32s ease, box-shadow 0.32s ease, transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1)
-  will-change: transform, box-shadow
+  transition: border-color 0.2s ease, transform 0.18s ease
   &:hover
     border-color: rgba(116,247,209,0.40)
-    box-shadow: 0 26px 84px rgba(0,0,0,0.40), 0 0 28px rgba(116,247,209,0.12)
-    transform: translateY(-5px)
+    transform: translateY(-1px)
   &[open]
     grid-column: span 1
     border-color: rgba(116,247,209,0.52)
@@ -909,7 +804,7 @@ body
   color: #74f7d1
   font-size: 28px
   line-height: 1
-  transition: transform 0.3s ease
+  transition: transform 0.2s ease
 
 .guide-card[open] .guide-card-toggle
   transform: rotate(45deg)
@@ -945,7 +840,7 @@ body
   max-width: 1060px
   margin: 0 auto
   .article-inner
-    border-radius: 32px
+    border-radius: 14px
   .article-entry
     font-size: 17px
 
@@ -991,6 +886,8 @@ body
     &:after
       content: none
     // 代码块与表格越界到宽列
+    // box-sizing 必须显式 border-box：主题无全局 border-box，
+    // 否则 width:100% + 代码块自身 padding 会溢出 grid 区域
     > .highlight,
     > pre,
     > table
@@ -998,6 +895,7 @@ body
       width: 100%
       max-width: unquote("min(52em, 100%)")
       justify-self: center
+      box-sizing: border-box
   .article-entry pre,
   .article-entry .highlight
     margin-left: 0
@@ -1033,9 +931,9 @@ body
 .guide-posts
   padding: 30px
   border: 1px solid rgba(116,198,255,0.2)
-  border-radius: 28px
-  background: linear-gradient(145deg, rgba(8,19,38,0.9), rgba(4,9,21,0.78))
-  box-shadow: 0 22px 80px rgba(0,0,0,0.38)
+  border-radius: 14px
+  background: linear-gradient(145deg, rgba(8,19,38,0.96), rgba(4,9,21,0.92))
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05)
 
 // 栏目页正文（layout: guide 的 page.content）：global-reset 后所有内容
 // 元素都是裸样式，这里补一套与 .article-entry 一致的内容排版。
@@ -1095,7 +993,7 @@ body
     color: #74f7d1
     background: rgba(116, 247, 209, 0.08)
     border: 1px solid rgba(116, 247, 209, 0.14)
-    border-radius: 5px
+    border-radius: 6px
     padding: 0.15em 0.4em
     font-family: font-mono
     font-variant-ligatures: none
@@ -1105,7 +1003,7 @@ body
     margin: 20px 0
     padding: 15px article-padding
     border: 1px solid color-border
-    border-radius: 14px
+    border-radius: 10px
     background: rgba(2, 6, 18, 0.62)
     overflow: auto
     color: #cccccc
@@ -1139,13 +1037,13 @@ body
     margin: 24px 0
     padding: 12px 18px
     background: rgba(142, 182, 255, 0.06)
-    border-radius: 0 14px 14px 0
+    border-radius: 0 10px 10px 0
     color: #b8c9e6
   table
     width: 100%
     margin: 20px 0
     border: 1px solid rgba(116, 198, 255, 0.14)
-    border-radius: 14px
+    border-radius: 10px
     overflow: hidden
     border-collapse: collapse
   th
@@ -1159,7 +1057,7 @@ body
   img
     max-width: 100%
     height: auto
-    border-radius: 12px
+    border-radius: 10px
 
 .guide-page-kicker,
 .guide-posts-heading span
@@ -1190,14 +1088,13 @@ body
   gap: 20px
   padding: 16px 18px
   border: 1px solid rgba(142,182,255,0.14)
-  border-radius: 16px
+  border-radius: 10px
   color: #dcecff
   background: rgba(3,11,24,0.48)
   text-decoration: none
-  transition: border-color 0.25s ease, transform 0.25s ease
+  transition: border-color 0.2s ease
   &:hover
     border-color: rgba(116,247,209,0.46)
-    transform: translateX(5px)
     text-decoration: none
   strong, small, time
     display: block
@@ -1221,12 +1118,12 @@ body
   padding: 24px
   overflow: hidden
   border: 1px solid rgba(116,198,255,0.18)
-  border-radius: 26px
+  border-radius: 14px
   color: #b7c5da
-  background: linear-gradient(145deg, rgba(9, 23, 45, 0.86), rgba(3, 9, 21, 0.72))
-  box-shadow: 0 20px 70px rgba(0,0,0,0.34)
+  background: linear-gradient(145deg, rgba(9, 23, 45, 0.96), rgba(3, 9, 21, 0.92))
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05)
   text-decoration: none
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease
+  transition: transform 0.18s ease, border-color 0.2s ease
   &:before
     content: ""
     position: absolute
@@ -1235,9 +1132,8 @@ body
     background: radial-gradient(circle, rgba(116,247,209,0.18), transparent 68%)
   &:hover
     color: #dcecff
-    transform: translateY(-6px)
+    transform: translateY(-1px)
     border-color: rgba(116,247,209,0.44)
-    box-shadow: 0 30px 100px rgba(0,0,0,0.46), 0 0 34px rgba(116,247,209,0.12)
     text-decoration: none
   h2
     margin: 26px 0 12px
@@ -1273,12 +1169,12 @@ body
   margin: 36px 0 20px
   padding: 20px
   border: 1px solid rgba(116,247,209,0.28)
-  border-radius: 24px
+  border-radius: 14px
   color: #b7c5da
   background:
     radial-gradient(circle at 100% 0%, rgba(116,247,209,0.18), transparent 38%),
-    linear-gradient(145deg, rgba(7, 22, 43, 0.92), rgba(2, 8, 18, 0.86))
-  box-shadow: 0 18px 60px rgba(0,0,0,0.34)
+    linear-gradient(145deg, rgba(7, 22, 43, 0.96), rgba(2, 8, 18, 0.94))
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05)
   strong
     display: block
     margin-top: 6px
@@ -1298,9 +1194,9 @@ body
 .widget-wrap
   border-color: rgba(116,247,209,0.26)
   background:
-    linear-gradient(145deg, rgba(9, 24, 46, 0.92), rgba(2, 8, 20, 0.84)),
+    linear-gradient(145deg, rgba(9, 24, 46, 0.96), rgba(2, 8, 20, 0.94)),
     radial-gradient(circle at 100% 0%, rgba(142,182,255,0.16), transparent 42%)
-  box-shadow: 0 20px 80px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.06)
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06)
 
 .widget-title
   display: flex
@@ -1323,14 +1219,14 @@ body
   text-shadow: none !important
   background: rgba(3, 11, 24, 0.46) !important
   border: 1px solid rgba(116,198,255,0.16) !important
-  border-radius: 18px !important
+  border-radius: 10px !important
   box-shadow: inset 0 0 24px rgba(116,247,209,0.03) !important
-  transition: all 0.3s ease !important
+  transition: all 0.2s ease !important
   a
     color: #dcecff !important
     font-weight: 600
     text-decoration: none !important
-    transition: all 0.25s ease !important
+    transition: all 0.2s ease !important
     &:hover
       color: #74f7d1 !important
       text-decoration: none !important
@@ -1339,9 +1235,9 @@ body
     margin: 8px 0
     padding: 8px 11px
     border: 1px solid rgba(142,182,255,0.10)
-    border-radius: 12px
+    border-radius: 6px
     background: rgba(7,18,36,0.48)
-    transition: all 0.25s ease
+    transition: all 0.2s ease
     &:hover
       border-color: rgba(116,247,209,0.24)
       background: rgba(7,18,36,0.64)
@@ -1363,38 +1259,18 @@ body
     background: rgba(116,247,209,0.06)
     color: #dcecff !important
     font-size: 13px !important
-    transition: all 0.28s ease !important
+    transition: all 0.2s ease !important
     &:hover
       color: #071426 !important
       background: linear-gradient(90deg, #74f7d1, #8eb6ff)
       border-color: transparent
-      transform: translateY(-2px)
-      box-shadow: 0 8px 20px rgba(116, 247, 209, 0.2)
-
-@keyframes radarSpin
-  to
-    transform: translate(-50%, -50%) rotate(360deg)
-
-@keyframes portalSweep
-  0%, 55%
-    transform: translateX(-90%)
-  100%
-    transform: translateX(90%)
+      transform: translateY(-1px)
 
 @media screen and (max-width: 900px)
   .portal-landing,
   .mission-grid,
   .guide-grid
     grid-template-columns: 1fr
-  .portal-radar
-    min-height: 220px
-  .ring-three,
-  .radar-sweep
-    width: 210px
-    height: 210px
-  .ring-two
-    width: 140px
-    height: 140px
   .article-title
     font-size: 2em
   .article-entry
@@ -1414,7 +1290,6 @@ body
 @media screen and (max-width: 479px)
   .portal-landing
     padding: 24px
-    border-radius: 24px
   .portal-panel h1
     font-size: 34px
   .portal-actions
