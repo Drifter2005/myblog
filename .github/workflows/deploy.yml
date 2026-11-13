@@ -1,5 +1,10 @@
 name: Deploy Hexo site
 
+# Repository Pages settings:
+# - myblog (source): GitHub Actions; do not run the default Jekyll branch builder.
+# - Drifter2005.github.io (generated site): main branch, root directory.
+# See docs/publishing.md for the publishing flow and troubleshooting.
+
 on:
   push:
     branches:

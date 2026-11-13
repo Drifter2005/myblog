@@ -41,6 +41,8 @@ npm run server
 
 继续用原来的 Hexo / Qexo 方式写文章。推送源码仓库 `Drifter2005/myblog` 的 `main` 分支后，现有 GitHub Actions 会生成静态文件并发布到 `Drifter2005/Drifter2005.github.io`。
 
+源码仓库 `myblog` 的 Settings → Pages → Build and deployment → Source 应设为 **GitHub Actions**。直接从源码分支发布会额外启动 Jekyll，它会把 Hexo 配置中的 `theme: meadow` 当作 Jekyll 主题并报找不到主题。正式发布仓库 `Drifter2005.github.io` 继续从 `main` 分支的根目录发布生成好的静态文件。完整说明见 `docs/publishing.md`。
+
 不要把 `public/` 当作 Hexo 源码提交，也不要手动覆盖发布仓库来替代源码更新。原来的 `cosmic` 主题保留为可恢复的旧版本。
 
 两篇阅读笔记在 front matter 中固定了原来的 `permalink`，保证旧站的文章地址不因日期解析差异改变；原来的 `observatory-manifesto/` 地址也继续有效。
