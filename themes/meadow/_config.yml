@@ -1,0 +1,23 @@
+menu:
+  文章: /#journal
+  算法: /algorithm/
+  CTF: /ctf/
+  随记: /about/
+  归档: /archives/
+subtitle: 记录学习，也记录生活。
+favicon: /favicon.svg
+landing:
+  poster: /media/meadow-poster.webp
+  mobile_poster: /media/meadow-mobile.webp
+  video: /media/meadow.mp4
+  eyebrow: 慢慢走，也慢慢记录。
+background: /media/meadow-poster.webp
+waline:
+  serverURL:
+  lang: zh-CN
+  placeholder: 留下一点想法吧。
+  requiredMeta: nick,mail
+  pageSize: 10
+  reaction: false
+  commentCount: true
+  pageview: true

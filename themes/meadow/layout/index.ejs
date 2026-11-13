@@ -1,0 +1,4 @@
+<header class="section-heading"><div><p class="eyebrow">THE JOURNAL</p><h2>最近的记录<span class="heading-dot">.</span></h2><p class="section-description">关于代码、阅读，和生活里的片刻。</p></div><a class="quiet-link" href="<%= url_for('/archives/') %>">全部文章 <span aria-hidden="true">↗</span></a></header>
+<nav class="topic-nav" aria-label="文章分类"><a class="active" href="<%= url_for('/#journal') %>" aria-current="page">全部</a><a href="<%= url_for('/algorithm/') %>">算法</a><a href="<%= url_for('/ctf/') %>">CTF</a><a href="<%= url_for('/about/') %>">随记</a><span><%= site.posts.length %> 篇记录</span></nav>
+<div class="post-list"><% page.posts.each(function(post) { %><%- partial('_partial/post-card', {post: post}) %><% }); %></div>
+<%- partial('_partial/pagination') %>

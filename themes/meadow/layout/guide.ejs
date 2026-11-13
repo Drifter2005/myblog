@@ -1,0 +1,5 @@
+<header class="section-heading guide-heading"><div><p class="eyebrow">COLLECTION</p><h1><%= page.title %><span class="heading-dot">.</span></h1></div></header>
+<div class="article-entry guide-intro"><%- page.content %></div>
+<% var kind = page.guide_kind || 'notes'; var selected = site.posts.sort('date', -1).filter(function(post) { var names = post.categories.map(function(c) { return c.name.toLowerCase(); }); var algorithm = names.some(function(n) { return n === 'algorithm' || n === '算法'; }); var ctf = names.indexOf('ctf') !== -1; return kind === 'algorithm' ? algorithm : kind === 'ctf' ? ctf : !algorithm && !ctf; }); %>
+<div class="collection-label"><h2><%= kind === 'algorithm' ? '算法文章' : kind === 'ctf' ? 'CTF 文章' : '随记文章' %></h2><span><%= selected.length %> 篇</span></div>
+<div class="post-list"><% selected.each(function(post) { %><%- partial('_partial/post-card', {post: post}) %><% }); %><% if (!selected.length) { %><p class="empty-state">这里的记录正在慢慢积累。</p><% } %></div>

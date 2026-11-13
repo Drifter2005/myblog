@@ -1,0 +1,12 @@
+<header class="site-header <%= landing ? 'over-landing' : '' %>">
+  <a class="brand" href="<%= url_for('/') %>" aria-label="Drifter Blog 首页">
+    <svg class="brand-symbol" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M26 5C13 4 5 11 7 20c1 6 10 9 15 2 4-5 2-11 4-17Z" stroke="currentColor" stroke-width="1.6"/><path d="M6 28 21 12M12 22l-1-8m6 3 6 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span>Drifter<span class="brand-label">BLOG</span></span>
+  </a>
+  <nav class="main-nav" aria-label="主导航">
+    <% for (var label in theme.menu) { var href = theme.menu[label]; %>
+      <a href="<%= url_for(href) %>" <%- page.path && href !== '/#journal' && ('/' + page.path).startsWith(href) ? 'aria-current="page"' : '' %>><%= label %></a>
+    <% } %>
+  </nav>
+  <button class="header-search icon-button" data-open-search type="button" aria-label="搜索文章"><%- partial('icon', {name: 'search'}) %></button>
+</header>

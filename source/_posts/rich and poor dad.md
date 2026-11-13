@@ -1,5 +1,6 @@
 ---
 abbrlink: ''
+permalink: 2026/08/26/rich and poor dad/
 categories:
 - - 随笔
 date: '2026-08-27T10:54:11.515259+08:00'

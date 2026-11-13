@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="<%= config.language || 'zh-CN' %>">
+<%- partial('_partial/head') %>
+<% var landing = is_home() && (!page.current || page.current === 1); %>
+<body class="<%= landing ? 'has-landing' : 'inner-page' %> <%= is_post() ? 'is-post' : '' %>" style="--page-image: url('<%= url_for(theme.background) %>')">
+  <a class="skip-link" href="#journal">跳到正文</a>
+  <div class="page-scenery" aria-hidden="true"></div>
+  <%- partial('_partial/header', {landing: landing}) %>
+  <% if (landing) { %><%- partial('_partial/landing') %><% } %>
+  <main id="journal" class="site-main" tabindex="-1">
+    <div class="content-layout <%= is_post() || page.layout === 'page' ? 'reading-layout' : '' %>">
+      <section class="main-column"><%- body %></section>
+      <% if (!is_post() && page.layout !== 'page') { %><%- partial('_partial/sidebar') %><% } %>
+    </div>
+  </main>
+  <%- partial('_partial/footer') %>
+  <%- partial('_partial/tools') %>
+  <%- partial('_partial/after-footer') %>
+</body>
+</html>

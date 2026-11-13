@@ -1,0 +1,6 @@
+<aside class="blog-sidebar" aria-label="博客信息">
+  <section class="profile-card"><div class="profile-avatar" aria-hidden="true">D<span>✳</span></div><p class="eyebrow">HELLO, I'M</p><h2>Drifter<span class="heading-dot">.</span></h2><p>一个慢慢学习、认真生活的人。<br>在这里，留下一些走过的痕迹。</p><div class="profile-count"><a href="<%= url_for('/archives/') %>"><strong><%= site.posts.length %></strong><span>文章</span></a><span class="profile-count-separator"></span><div><strong><%= site.tags.length %></strong><span>标签</span></div><a href="<%= url_for('atom.xml') %>"><strong>RSS</strong><span>订阅</span></a></div><a class="profile-github" href="https://github.com/Drifter2005" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></section>
+  <section class="sidebar-section"><h3>随手翻翻</h3><a class="side-topic" href="<%= url_for('/algorithm/') %>"><span>01</span> 算法笔记 <span>↗</span></a><a class="side-topic" href="<%= url_for('/ctf/') %>"><span>02</span> CTF 记录 <span>↗</span></a><a class="side-topic" href="<%= url_for('/about/') %>"><span>03</span> 阅读与随记 <span>↗</span></a></section>
+  <section class="sidebar-section"><h3>一些关键词</h3><div class="tag-cloud"><% site.tags.sort('length', -1).limit(14).each(function(tag) { %><a href="<%= url_for(tag.path) %>"><%= tag.name %></a><% }); %></div></section>
+  <p class="sidebar-note">不必急着抵达。<br>记录本身，就有意义。</p>
+</aside>

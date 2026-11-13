@@ -1,5 +1,6 @@
 ---
 abbrlink: ''
+permalink: 2026/08/08/island-economy/
 categories:
 - - 随笔
 date: '2026-08-09T04:31:36.819572+08:00'

@@ -1,0 +1,4 @@
+<script id="meadow-config" type="application/json"><%- JSON.stringify({root: config.root, search: url_for('search.json'), musicRoot: url_for('/music/')}).replace(/</g, '\u003c') %></script>
+<script defer src="<%= url_for('js/meadow.js') %>?v=<%= asset_version('js/meadow.js') %>"></script>
+<script defer src="<%= url_for('js/likes.js') %>?v=<%= asset_version('js/likes.js') %>"></script>
+<% if (theme.waline && theme.waline.serverURL) { %><script>window.__WALINE_CONFIG__ = <%- JSON.stringify(theme.waline).replace(/</g, '\u003c') %>;</script><script type="module" src="<%= url_for('js/waline-init.js') %>?v=<%= asset_version('js/waline-init.js') %>"></script><% } %>

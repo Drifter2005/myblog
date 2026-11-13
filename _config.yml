@@ -3,8 +3,8 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Drifter Observatory
-subtitle: '算法、CTF 与深空工程日志'
+title: Drifter Blog
+subtitle: '记录学习，也记录生活。'
 description: 'Drifter2005 的个人技术博客，记录算法训练、CTF 复盘、密码学与安全工程思考。'
 keywords: algorithm, CTF, cybersecurity, cryptography, reverse engineering, pwn, data structures
 author: Drifter2005
@@ -96,7 +96,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: cosmic
+theme: meadow
 
 # RSS/Atom feed（hexo-generator-feed）
 feed:

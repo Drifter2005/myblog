@@ -1,0 +1,21 @@
+<section class="landing" aria-labelledby="landing-title">
+  <div class="landing-media" aria-hidden="true">
+    <picture><source media="(max-width: 600px)" srcset="<%= url_for(theme.landing.mobile_poster) %>"><img class="landing-poster" src="<%= url_for(theme.landing.poster) %>" alt="" fetchpriority="high" width="1920" height="1080"></picture>
+    <video id="landing-video" muted loop playsinline preload="none" poster="<%= url_for(theme.landing.poster) %>" data-video-src="<%= url_for(theme.landing.video) %>" tabindex="-1"></video>
+  </div>
+  <div class="landing-wash" aria-hidden="true"></div>
+  <div class="landing-content">
+    <p class="eyebrow"><span></span><%= theme.landing.eyebrow %></p>
+    <h1 id="landing-title" class="sr-only">Drifter 的个人博客</h1>
+    <figure class="landing-quote">
+      <blockquote>
+        <p>一生中总会遇到这样的时候，<br>你的内心已经兵荒马乱翻天覆地了，</p>
+        <p>可是在别人看来，<br>你只是比平时沉默了一点，<br>没人会觉得奇怪。</p>
+        <p class="quote-last">这种战争，注定单枪匹马。</p>
+      </blockquote>
+      <figcaption>—— 白岩松《痛并快乐着》</figcaption>
+    </figure>
+    <a class="enter-blog" href="#journal">走进博客 <%- partial('icon', {name: 'arrow'}) %></a>
+  </div>
+  <div class="landing-bottom"><a href="#journal" class="scroll-cue"><span>往下，看看最近的记录</span><%- partial('icon', {name: 'down'}) %></a><button id="video-toggle" class="video-toggle" type="button" aria-label="播放背景动画" aria-pressed="false"><%- partial('icon', {name: 'play'}) %><span>播放风景</span></button></div>
+</section>

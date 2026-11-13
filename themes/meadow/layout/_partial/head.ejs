@@ -1,0 +1,17 @@
+<head>
+  <meta charset="utf-8">
+  <% var title = page.title || (is_archive() ? '文章归档' : is_category() ? '分类 · ' + page.category : is_tag() ? '标签 · ' + page.tag : ''); %>
+  <title><%= title ? title + ' · ' : '' %><%= config.title %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f7f3">
+  <meta name="color-scheme" content="light">
+  <% var desc = strip_html(page.excerpt || (is_post() ? page.content : '') || config.description).replace(/\s+/g, ' ').slice(0, 160); %>
+  <%- open_graph({description: desc, url: (page.permalink || config.url + url_for(page.path || '/')).replace(/index\.html$/, '')}) %>
+  <link rel="canonical" href="<%= (page.permalink || config.url + url_for(page.path || '/')).replace(/index\.html$/, '') %>">
+  <link rel="icon" href="<%= url_for(theme.favicon) %>" type="image/svg+xml">
+  <link rel="alternate" href="<%= url_for('atom.xml') %>" type="application/atom+xml" title="<%= config.title %>">
+  <link rel="stylesheet" href="<%= url_for('css/meadow.css') %>?v=<%= asset_version('css/meadow.css') %>">
+  <% if (theme.waline && theme.waline.serverURL) { %>
+    <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css">
+  <% } %>
+</head>
